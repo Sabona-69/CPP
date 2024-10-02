@@ -10,6 +10,7 @@ class PhoneBook{
 	public:
 		void set_contact(Contact new_contacts[8], int index);
 		void get_contact(Contact new_contacts[8], int index);
+		void print_table()
 		
 
 };

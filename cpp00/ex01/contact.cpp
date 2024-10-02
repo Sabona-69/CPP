@@ -1,13 +1,11 @@
 #include <contact.hpp>
 #include <iostream>
 
-void	Contact::get_contact_info(Contact new_contact)
+
+
+void	Contact::get_contact_info(int index)
 {
-	std::string check = new_contact.first_name;
-	if (check.length() > 10)
-		check[9] = '.';
-	
-	std::cout << "|" <<  
+	std::cout << "|" << index << "|" << get_string(get_first_name()) << "|" << get_string(get_last_name()) << "|" << get_string(get_nickname()) << "|"; 
 }
 
 void	Contact::set_first_name()
