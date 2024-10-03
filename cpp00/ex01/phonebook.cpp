@@ -1,6 +1,13 @@
-#include "contact.hpp"
-#include "phonebook.hpp"
+#include "Contact.hpp"
+#include "PhoneBook.hpp"
 
+Contact *PhoneBook::get_contact() {
+	return contacts;
+}
+
+int PhoneBook::get_count() {
+	return count;
+}
 
 void	PhoneBook::set_contact()
 {
@@ -14,7 +21,7 @@ void	PhoneBook::set_contact()
 	count++;
 }
 
-void PhoneBook::get_contact_info(){
+void PhoneBook::get_contact_info() {
 	std::string input;
 	int 		i;
 
@@ -34,14 +41,14 @@ void PhoneBook::get_contact_info(){
 
 void PhoneBook::get_table()
 {
-	std::cout << "=============================================" << std::endl;
-	std::cout << "|   index  |first_name|last_name | nickname |" << std::endl;
-	std::cout << "=============================================" << std::endl;
+	std::string(44, '=');
+	std::cout << "|   index  |first_name|last_name | nickname |\n";// << std::endl;
+	std::string(44, '=');
 	for (int i = 0; i < get_count(); i++){
-		std::cout << "|" << i + 1
-				  << "|" << contacts[i].get_string(contacts[i].get_first_name())
-				  << "|" << contacts[i].get_string(contacts[i].get_last_name())
-				  << "|" << contacts[i].get_string(contacts[i].get_nickname())
+		std::cout << std::getw(10) << std::right << "|" << i + 1
+				  << std::setw(10) << std::right << "|" << contacts[i].get_string(contacts[i].get_first_name())
+				  << std::setw(10) << std::right << "|" << contacts[i].get_string(contacts[i].get_last_name())
+				  << std::setw(10) << std::right << "|" << contacts[i].get_string(contacts[i].get_nickname())
 				  << "|" << std::endl;
 		std::cout << "=============================================" << std::endl;
 	}
