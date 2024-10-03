@@ -1,5 +1,5 @@
-#include "phonebook.hpp"
-#include "contact.hpp"
+#include "PhoneBook.hpp"
+#include "Contact.hpp"
 #include <iostream>
 
 int	main()
@@ -10,11 +10,11 @@ int	main()
 	// {
 		while (1)
 		{
-			std::getline(std::cin, input);
+			std::cout << "Insert command >: ";
+			if (!std::getline(std::cin, input))
+				break;
 			if (input == "ADD")
-			{
 				Book.set_contact();
-			}
 			else if (input == "SEARCH")
 			{
 				Book.get_table();
@@ -24,6 +24,9 @@ int	main()
 			}
 			else if (input == "EXIT")
 				return 0;
+			else {
+				std::cout << "Please Insert right command (ADD, SEARCH or EXIT)" << std::endl;
+			}
 		}
-	std:: cout << std:: endl;
-	}
+		std:: cout << std:: endl;
+}

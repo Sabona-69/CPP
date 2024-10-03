@@ -5,11 +5,11 @@ GREEN := \033[0;32m
 RESET := \033[0m
 
 
-NAME	= phonebook
+NAME	= PhoneBook
 
 RM		= rm -f
 
-SRC		= main.cpp contact.cpp phonebook.cpp \
+SRC		= main.cpp Contact.cpp PhoneBook.cpp \
 
 CFLAGS	= -Wall -Wextra -Werror #-std=c++98
 
@@ -17,7 +17,7 @@ OBJ		= $(SRC:.cpp=.o)
 
 CC		= c++
 
-INCLUDE = contact.hpp phonebook.hpp \
+INCLUDE = Contact.hpp PhoneBook.hpp \
 
 all		: $(NAME)
 			
