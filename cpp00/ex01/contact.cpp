@@ -1,12 +1,5 @@
-#include <contact.hpp>
-#include <iostream>
-
-
-
-void	Contact::get_contact_info(int index)
-{
-	std::cout << "|" << index << "|" << get_string(get_first_name()) << "|" << get_string(get_last_name()) << "|" << get_string(get_nickname()) << "|"; 
-}
+#include "phonebook.hpp"
+#include "contact.hpp"
 
 void	Contact::set_first_name()
 {
@@ -48,3 +41,6 @@ void	Contact::set_darkest_secret()
 	std::cout << std::endl;
 	darkest_secret = new_darkest_secret;
 }
+
+
+

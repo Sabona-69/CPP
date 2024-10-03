@@ -1,24 +1,29 @@
-#include <phonebook.hpp>
-#include <contact.hpp>
+#include "phonebook.hpp"
+#include "contact.hpp"
 #include <iostream>
 
-int	main(int ac, char **av)
+int	main()
 {
 	std::string	input;
-	int			index;
-	index = 0;
-	if (ac == 2)
-	{
+	PhoneBook	Book;
+	// if (ac == 2)
+	// {
 		while (1)
 		{
-			std::cin >> input;
+			std::getline(std::cin, input);
 			if (input == "ADD")
-				
+			{
+				Book.set_contact();
+			}
 			else if (input == "SEARCH")
-
+			{
+				Book.get_table();
+				for (int i = 0; i < Book.get_count(); i++)
+					Book.get_contact();
+				Book.get_contact_info();
+			}
 			else if (input == "EXIT")
-
+				return 0;
 		}
-	}
 	std:: cout << std:: endl;
-}
+	}
