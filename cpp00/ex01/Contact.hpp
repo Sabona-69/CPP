@@ -10,7 +10,6 @@ class Contact{
 		std::string phone_number;
 		std::string darkest_secret;
 	public:
-		std::string get_string(std::string str);
 		std::string get_first_name();
 		std::string get_last_name();
 		std::string get_nickname();

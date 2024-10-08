@@ -11,18 +11,18 @@ RM		= rm -f
 
 SRC		= main.cpp Contact.cpp PhoneBook.cpp \
 
-CFLAGS	= -Wall -Wextra -Werror #-std=c++98
+CFLAGS	= -Wall -Wextra -Werror -fsanitize=address#-std=c++98
 
 OBJ		= $(SRC:.cpp=.o)
 
-CC		= c++
+CC		= g++
 
 INCLUDE = Contact.hpp PhoneBook.hpp \
 
 all		: $(NAME)
 			
 %.o		: %.cpp $(INCLUDE)
-			c++ $(CFLAGS) -c $<  -o $@
+			$(CC) $(CFLAGS) -c $<  -o $@
 $(NAME)	: $(OBJ)
 			$(CC) $(CFLAGS) $(OBJ) -o $@
 clean	: 
