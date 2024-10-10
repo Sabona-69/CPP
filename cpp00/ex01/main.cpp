@@ -18,7 +18,7 @@ int	main()
 			else if (input == "SEARCH")
 			{
 				Book.get_table();
-				for (int i = 0; i < Book.get_count(); i++)
+				for (int i = 0; i < Book.get_count() - 1; i++)
 					Book.get_contact();
 				Book.get_contact_info();
 			}
@@ -28,5 +28,5 @@ int	main()
 				std::cout << "Please Insert right command (ADD, SEARCH or EXIT)" << std::endl;
 			}
 		}
-		std:: cout << std:: endl;
+		std::cout << std::endl;
 }
