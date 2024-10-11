@@ -64,9 +64,9 @@ std::string get_string(std::string str)
 
 void PhoneBook::get_table()
 {
-	int	breaker = get_count() + 1;
+	int	breaker = get_count();
 
-	if (breaker >= 8)
+	if (breaker > 8)
 		breaker = 8;
 	std::cout << "============================================" << std::endl;
 	std::cout << std::setw(10) << std::right << "index" << "|";
@@ -74,7 +74,7 @@ void PhoneBook::get_table()
 	std::cout << std::setw(10) << std::right << "last name" << "|";
 	std::cout << std::setw(10) << std::right << "nickname" << "|";
 	std::cout << "\n============================================\n";
-	for (int i = 0; i < breaker - 1; i++){
+	for (int i = 0; i < breaker; i++){
 		std::cout << std::setw(10) << std::right << i + 1 << "|";
 		std::cout << std::setw(10) << std::right << get_string(contacts[i].get_first_name()) << "|";
 		std::cout << std::setw(10) << std::right << get_string(contacts[i].get_last_name()) << "|";
