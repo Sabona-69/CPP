@@ -11,7 +11,6 @@ class PhoneBook{
 	public:
 		Contact *get_contact();
 		int get_count();
-		// std::string get_string(std::string str);
 		void set_contact();
 		void get_table();
 		void get_contact_info();

@@ -2,7 +2,7 @@
 #include "PhoneBook.hpp"
 #include <iomanip>
 
-std::string get_input();
+std::string get_input(std::string prompt);
 
 Contact *PhoneBook::get_contact() {
 	return contacts;
@@ -22,16 +22,17 @@ void	PhoneBook::set_contact()
 	count++;
 }
 
-std::string get_input(std::string print)
+std::string get_input(std::string prompt)
 {
 	std::string input;
-	// std::getline(std::cin, input);
-		std::cout << print << std::endl;
-	while (!input.empty()){
-		std::cout << "Input can't be empty !\n";
-		// std::getline(std::cin, input);
-	}
-	return input;
+	while (true) {
+        std::cout << prompt;
+        std::getline(std::cin, input);
+        if (!input.empty())
+            break;
+        std::cout << "Input can't be empty!\n";
+    }
+    return input;
 }
 
 
@@ -39,7 +40,6 @@ void PhoneBook::get_contact_info() {
 	std::string input;
 	int 		i;
 
-	// std::cout << "Enter index of contact :" << std::endl;
 	input = get_input("Enter index of contact :");
 	i = std::atoi(input.c_str());
 	if (i < 1 || i > count){
@@ -64,7 +64,6 @@ std::string get_string(std::string str)
 
 void PhoneBook::get_table()
 {
-	// std::string(44, '=')
 	int	breaker = get_count() + 1;
 
 	if (breaker >= 8)

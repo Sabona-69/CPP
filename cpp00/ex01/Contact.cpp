@@ -23,46 +23,38 @@ std::string Contact::get_darkest_secret() {
 	return darkest_secret;
 };
 
-// {
-// 	std::string input;
-// 	while (!std::getline(std::cin, input)){
-// 		std::cout << "Input can't be empty\n";
-// 	}
-// 	return input;
-// }
-
 void	Contact::set_first_name()
 {
-	// std::cout << "First name : ";
-	// std::string new_fname;
-	// std::getline(std::cin, new_fname);
 	first_name = get_input("First name : ");
 }
 void	Contact::set_last_name()
 {
-	// std::string new_lname;
-	// std::cout << "Last name : ";
-	// std::getline(std::cin, new_lname);
 	last_name = get_input("Last name : ");
 }
 void	Contact::set_nickname()
 {
-	// std::string new_nickname;
-	// std::cout << ;
-	// std::getline(std::cin, new_nickname);
 	nickname = get_input("Nickname : ");
 }
 void	Contact::set_phone_number()
 {
-	// std::string new_number;
-	// std::cout << "Phone number : ";
-	// std::getline(std::cin, new_number);
-	phone_number = get_input("Phone number : ");
+	while (true)
+	{
+		bool checker = true;
+		phone_number = get_input("Phone number : ");
+		for (int i = 0; i < (int)phone_number.length(); i++)
+		{
+			if (!isdigit(phone_number[i])){
+				std::cout << "The input must be numbers !\n";
+				checker = false;
+				break;
+			}
+		}
+		if (checker)
+			return;	
+	}	
 }
+
 void	Contact::set_darkest_secret()
 {
-	// std::string new_darkest_secret;
-	// std::cout << "Darkest secret : ";
-	// std::getline(std::cin, new_darkest_secret);
 	darkest_secret = get_input("Darkest secret : ");
 }
