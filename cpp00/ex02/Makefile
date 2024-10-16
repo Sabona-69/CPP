@@ -5,11 +5,11 @@ GREEN := \033[0;32m
 RESET := \033[0m
 
 
-NAME	= PhoneBook
+NAME	= Account
 
 RM		= rm -f
 
-SRC		= main.cpp Contact.cpp PhoneBook.cpp \
+SRC		= tests.cpp Account.cpp \
 
 CFLAGS	= -Wall -Wextra -Werror -fsanitize=address#-std=c++98
 
@@ -17,7 +17,7 @@ OBJ		= $(SRC:.cpp=.o)
 
 CC		= c++
 
-INCLUDE = Contact.hpp PhoneBook.hpp \
+INCLUDE = Account.hpp \
 
 all		: $(NAME)
 			

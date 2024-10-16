@@ -9,7 +9,7 @@ int	main()
 	while (1)
 	{
 		std::cout << "Insert command >: ";
-		if (!std::getline(std::cin, input))
+		if (!std::getline(std::cin, input) || std::cin.eof())
 			break;
 		if (input == "ADD")
 			Book.set_contact();

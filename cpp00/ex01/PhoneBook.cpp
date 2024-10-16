@@ -2,7 +2,6 @@
 #include "PhoneBook.hpp"
 #include <iomanip>
 
-std::string get_input(std::string prompt);
 
 Contact *PhoneBook::get_contact() {
 	return contacts;
@@ -30,6 +29,8 @@ std::string get_input(std::string prompt)
         std::getline(std::cin, input);
         if (!input.empty())
             break;
+		if (std::cin.eof())
+			exit(0);
         std::cout << "Input can't be empty!\n";
     }
     return input;
@@ -68,18 +69,17 @@ void PhoneBook::get_table()
 
 	if (breaker > 8)
 		breaker = 8;
-	std::cout << "============================================" << std::endl;
-	std::cout << std::setw(10) << std::right << "index" << "|";
-	std::cout << std::setw(10) << std::right << "first name" << "|";
-	std::cout << std::setw(10) << std::right << "last name" << "|";
-	std::cout << std::setw(10) << std::right << "nickname" << "|";
+	std::cout << "============================================\n";
+	std::cout << std::setw(10) << "index" << "|";
+	std::cout << std::setw(10) << "first name" << "|";
+	std::cout << std::setw(10) << "last name" << "|";
+	std::cout << std::setw(10) << "nickname" << "|";
 	std::cout << "\n============================================\n";
 	for (int i = 0; i < breaker; i++){
-		std::cout << std::setw(10) << std::right << i + 1 << "|";
-		std::cout << std::setw(10) << std::right << get_string(contacts[i].get_first_name()) << "|";
-		std::cout << std::setw(10) << std::right << get_string(contacts[i].get_last_name()) << "|";
-		std::cout << std::setw(10) << std::right << get_string(contacts[i].get_nickname()) << "|";
-		// std::endl;
-		std::cout << "\n============================================" << std::endl;
+		std::cout << std::setw(10) << i + 1 << "|";
+		std::cout << std::setw(10) << get_string(contacts[i].get_first_name()) << "|";
+		std::cout << std::setw(10) << get_string(contacts[i].get_last_name()) << "|";
+		std::cout << std::setw(10) << get_string(contacts[i].get_nickname()) << "|";
+		std::cout << "\n============================================\n";
 	}
 }

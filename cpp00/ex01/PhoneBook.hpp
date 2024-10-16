@@ -1,14 +1,15 @@
 #ifndef PHONBOOK_HPP
 # define PHONBOOK_HPP
 
-#include <iostream>
 #include "Contact.hpp"
+#include <iostream>
 
 class PhoneBook{
 	private:
-		int		count = 0;
+		int		count;
 		Contact contacts[8];
 	public:
+	PhoneBook(){count = 0;}
 		Contact *get_contact();
 		int get_count();
 		void set_contact();
