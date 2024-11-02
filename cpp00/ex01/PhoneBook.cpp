@@ -2,6 +2,12 @@
 #include "PhoneBook.hpp"
 #include <iomanip>
 
+PhoneBook::PhoneBook() {
+	this->count =  0;
+}
+
+PhoneBook::~PhoneBook(){
+}
 
 Contact *PhoneBook::get_contact() {
 	return contacts;
@@ -41,11 +47,16 @@ void PhoneBook::get_contact_info() {
 	std::string input;
 	int 		i;
 
-	input = get_input("Enter index of contact :");
-	i = std::atoi(input.c_str());
-	if (i < 1 || i > count){
-		std::cout << "Invalid Index" << std::endl;
+	if (!count)
 		return ;
+	while (true){
+		input = get_input("Enter index of contact :");
+		i = std::atoi(input.c_str());
+		if(i < 1 || i > count)
+			std::cout << "Invalid Index" << std::endl;
+		else
+			break;
+		
 	}
 	std::cout << "First name : " << contacts[i - 1].get_first_name() << std::endl;
 	std::cout << "Last name : " << contacts[i - 1].get_last_name() << std::endl;
@@ -67,6 +78,10 @@ void PhoneBook::get_table()
 {
 	int	breaker = get_count();
 
+	if (!count){
+		std::cout << "The PhoneBook is empty ! try to ad a new one\n";
+		return ;
+	}
 	if (breaker > 8)
 		breaker = 8;
 	std::cout << "============================================\n";

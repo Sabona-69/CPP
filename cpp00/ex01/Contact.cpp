@@ -1,6 +1,18 @@
 #include "PhoneBook.hpp"
 #include "Contact.hpp"
 
+Contact::Contact(){
+	this->first_name = "";
+	this->last_name = "";
+	this->nickname = "";
+	this->phone_number = "";
+	this->darkest_secret = "";
+}
+
+Contact::~Contact(){
+
+}
+
 std::string get_input(std::string print);
 
 std::string Contact::get_first_name() {

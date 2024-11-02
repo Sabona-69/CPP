@@ -9,7 +9,8 @@ class PhoneBook{
 		int		count;
 		Contact contacts[8];
 	public:
-	PhoneBook(){count = 0;}
+		PhoneBook();
+		~PhoneBook();
 		Contact *get_contact();
 		int get_count();
 		void set_contact();
