@@ -6,7 +6,7 @@
 /*   By: hel-omra <hel-omra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 14:44:43 by hel-omra          #+#    #+#             */
-/*   Updated: 2024/11/02 07:40:40 by hel-omra         ###   ########.fr       */
+/*   Updated: 2024/11/08 06:53:52 by hel-omra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	Account::getNbWithdrawals( void ){
 }
 
 void	Account::displayAccountsInfos( void ){
-	// accounts:8;total:20049;deposits:0;withdrawals:0
+	// accounts:8;total:20049;deposits:0;withdrawals:
 	std::cout << "account:" << getNbAccounts() << ";";
 	std::cout << "total:" << getTotalAmount() << ";";
 	std::cout << "deposits" << getNbDeposits() << ";"	;
@@ -58,5 +58,7 @@ bool Account::makeWithdrawal( int withdrawal ){
 }
 
 int	const	Account::checkAmount(){
+
+};
 	
 }
