@@ -19,29 +19,40 @@ int PhoneBook::get_count() {
 
 void	PhoneBook::set_contact()
 {
-	contacts[count % 8].set_first_name();
-	contacts[count % 8].set_last_name();
-	contacts[count % 8].set_nickname();
-	contacts[count % 8].set_phone_number();
-	contacts[count % 8].set_darkest_secret();
+	Contact	temp;
+
+	temp.set_first_name();
+	temp.set_last_name();
+	temp.set_nickname();
+	temp.set_phone_number();
+	temp.set_darkest_secret();
+	contacts[count % 8] = temp;
 	count++;
 }
 
 std::string get_input(std::string prompt)
 {
 	std::string input;
+	bool		isValid;
+
 	while (true) {
+		isValid = true;
         std::cout << prompt;
         std::getline(std::cin, input);
-        if (!input.empty())
-            break;
 		if (std::cin.eof())
 			exit(0);
-        std::cout << "Input can't be empty!\n";
+		for (size_t i = 0; i < input.length(); i++) {
+            if (!isprint((unsigned char)input[i])) {
+                isValid = false;
+                break;
+            }
+        }
+        if (!input.empty() && isValid)
+            break;
+		std::cout << "Invalid Input !\n";
     }
     return input;
 }
-
 
 void PhoneBook::get_contact_info() {
 	std::string input;

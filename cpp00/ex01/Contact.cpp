@@ -10,7 +10,6 @@ Contact::Contact(){
 }
 
 Contact::~Contact(){
-
 }
 
 std::string get_input(std::string print);
@@ -53,10 +52,6 @@ void	Contact::set_phone_number()
 	{
 		bool checker = true;
 		phone_number = get_input("Phone number : ");
-		// if (phone_number.length() != 10){
-		// 	std::cout << "The input must be 10 degits !\n";
-		// 	continue;
-		// }
 		for (int i = 0; i < (int)phone_number.length(); i++)
 		{
 			if (!isdigit(phone_number[i])){
