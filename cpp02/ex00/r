@@ -1,6 +1,27 @@
+#ifndef FIXED_HPP
+# define FIXED_HPP
+
+#include <iostream>
+#include <cmath>
+
+class Fixed{
+    private:
+        int                fixedNumber;
+        static const int    frac;
+    public:
+        Fixed();
+        Fixed(const Fixed& inst);
+        ~Fixed();
+        Fixed& operator=(const Fixed& inst);
+        int getRawBite( void ) const;
+        void setRawBite( int const raw ) ;
+};
+
+#endif
+
 #include "Fixed.hpp"
 
-Fixed::frac = 8;
+// Fixed::frac =8;
 
 Fixed::Fixed(){
     this->fixedNumber = 0;
@@ -30,3 +51,16 @@ Fixed::void setRawBite(const const raw) {
     fixedNumber = raw;
 }
 
+
+int main( void ) {
+  Fixed a;
+  Fixed b( a );
+  Fixed c;
+
+    c = b;
+    std::cout << a.getRawBits() << std::endl;
+    std::cout << b.getRawBits() << std::endl;
+    std::cout << c.getRawBits() << std::endl;
+    return 0;
+ // !FIXED_HPP
+}
