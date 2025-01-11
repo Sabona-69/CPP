@@ -18,17 +18,17 @@ void    Harl::error(){
 
 void    Harl::complain(std::string level)
 {
-    switch (!level.empty())
-    {
-        case  level == "debug":
-            debug();
-        case  level == "info":
-            info();
-        case  level == "warning":
-            warning();
-        case  level == "error":
-            error();
-        default
-            std::cout << "invalid log level" std::endl;
+    std::string levels[] = {
+        "DEBUG",
+        "INFO",
+        "WARNING",
+        "ERROR"
+    };
+    // void (Harl::*functions[])() = {&Harl::debug, &Harl::info, &Harl::warning, &Harl::error};
+    void (Harl::*func[])() = {&Harl::debug, &Harl::info, &Harl::warning, &Harl::error};
+    
+    for (int i = 0; i < 4; i++) {
+        if (levels[i] == level)
+            (this->*func[i])();
     }
 }

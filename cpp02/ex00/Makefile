@@ -5,11 +5,11 @@ GREEN := \033[0;32m
 RESET := \033[0m
 
 
-NAME	= Harl2.0
+NAME	= fixed
 
 RM		= rm -f
 
-SRC		= Harl.cpp main.cpp \
+SRC		= Fixed.cpp main.cpp \
 
 CFLAGS	= -Wall -Wextra -Werror #-std=c++98
 
@@ -17,7 +17,7 @@ OBJ		= $(SRC:.cpp=.o)
 
 CC		= c++
 
-INCLUDE = Harl.hpp
+INCLUDE = Fixed.hpp
 
 all		: $(NAME)
 			
