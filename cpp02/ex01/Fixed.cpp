@@ -11,8 +11,8 @@ Fixed::~Fixed(){
     std::cout << "Default  destuctor called !" << std::endl;
 }
 
-Fixed::Fixed(const Fixed& inst){
-    this->setRawBits(inst.getRawBits());
+Fixed::Fixed(const int& inst){
+    this->setRawBits(inst);
     std::cout << "Copy constuctor called !" << std::endl;
 }
 
@@ -30,5 +30,13 @@ int Fixed::getRawBits() const{
 void    Fixed::setRawBits(const int raw) {
     std::cout << "setRawBits member function called !" << std::endl;
     fixedNumber = raw;
+}
+
+int Fixed::toInt( void ) const {
+    return this->frac;
+}
+
+float Fixed::toFloat( void ) const {
+    return (this->frac / this->fixedNumber);
 }
 
