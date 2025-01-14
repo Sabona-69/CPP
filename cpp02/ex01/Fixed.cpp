@@ -16,6 +16,12 @@ Fixed::Fixed(const int& inst){
     std::cout << "Copy constuctor called !" << std::endl;
 }
 
+Fixed& Fixed::operator<<(const Fixed& inst){
+    std::cout << "Copy assignement operator called !" << std::endl;
+    this->setRawBits(inst.getRawBits());
+    return *this;
+}
+
 Fixed& Fixed::operator=(const Fixed& inst){
     std::cout << "Copy assignement operator called !" << std::endl;
     this->setRawBits(inst.getRawBits());
@@ -37,6 +43,6 @@ int Fixed::toInt( void ) const {
 }
 
 float Fixed::toFloat( void ) const {
-    return (this->frac / this->fixedNumber);
+    return ((float)this->frac / 256);
 }
 
