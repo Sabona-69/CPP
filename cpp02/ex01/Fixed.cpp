@@ -42,5 +42,6 @@ int Fixed::toInt( void ) const {
 }
 
 float Fixed::toFloat( void ) const {
-    return ((float)(this->fixedNumber / 256));
+    float res = this->fixedNumber / 256;
+    return res;
 }
