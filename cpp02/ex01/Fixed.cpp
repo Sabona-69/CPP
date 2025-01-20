@@ -16,10 +16,9 @@ Fixed::Fixed(const int& inst){
     std::cout << "Copy constuctor called !" << std::endl;
 }
 
-Fixed& Fixed::operator<<(const Fixed& inst){
-    std::cout << "Copy assignement operator called !" << std::endl;
-    this->setRawBits(inst.getRawBits());
-    return *this;
+std::ostream& Fixed::operator<<(std::ostream& os, const Fixed& inst){
+    os << inst.toFloat();
+    return os;
 }
 
 Fixed& Fixed::operator=(const Fixed& inst){
