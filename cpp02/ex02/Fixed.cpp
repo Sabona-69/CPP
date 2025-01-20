@@ -107,23 +107,23 @@ float Fixed::operator/(const Fixed& inst){
     return this->toFloat() / inst.toFloat();
 }
 
-float   min(float& one, float& two){
-    if (one < two)
+Fixed&   min(Fixed& one, Fixed& two){
+    if (one.toFloat() < two.toFloat())
         return one;
     return two;
 }
-float   min(const float& one, const float& two){
-    if (one < two)
+Fixed&   min(const Fixed one, const Fixed two){
+    if (one.toFloat() < two.toFloat())
         return one;
     return two;
 }
-float   max(float& one, float& two){
-    if (one > two)
+Fixed&   max(Fixed& one, Fixed& two){
+    if (one.toFloat() > two.toFloat())
         return one;
     return two;
 }
-float   max(const float& one, const float& two){
-    if (one > two)
+Fixed&   max(const Fixed& one, const Fixed& two){
+    if (one.toFloat() > two.toFloat())
         return one;
     return two;
 }

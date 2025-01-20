@@ -27,14 +27,14 @@ class Fixed{
         float   operator-(const Fixed& inst);
         float   operator*(const Fixed& inst);
         float   operator/(const Fixed& inst);
-        Fixed& Fixed::operator++( void );
-        Fixed& Fixed::operator++( int );
-        Fixed& Fixed::operator--( void );
-        Fixed& Fixed::operator--( int );
-        float   min(float& one, float& two);
-        float   min(const float& one, const float& two);
-        float   max(float& one, float& two);
-        float   max(const float& one, const float& two);
+        Fixed&  Fixed::operator++( void );
+        Fixed&  Fixed::operator++( int );
+        Fixed&  Fixed::operator--( void );
+        Fixed&  Fixed::operator--( int );
+        Fixed&  min(Fixed& one, Fixed& two);
+        Fixed&  min(const Fixed& one, const Fixed& two);
+        Fixed&  max(Fixed& one, Fixed& two);
+        Fixed&  max(const Fixed& one, const Fixed& two);
 };
 std::ostream& operator<<(std::ostream& os, const Fixed& inst);
 #endif // !FIXED_HPP
