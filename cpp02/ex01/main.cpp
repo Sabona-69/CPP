@@ -1,6 +1,8 @@
 #include "Fixed.hpp"
 
 #include <iostream>
+// std::ostream& operator<<(std::ostream& os, Fixed& inst);
+
 int main(void) {
   Fixed a;
   Fixed const b(10);

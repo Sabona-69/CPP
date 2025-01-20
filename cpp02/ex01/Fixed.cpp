@@ -16,9 +16,9 @@ Fixed::Fixed(const int& inst){
     std::cout << "Copy constuctor called !" << std::endl;
 }
 
-std::ostream& Fixed::operator<<(std::ostream& os, const Fixed& inst){
+std::ostream& operator<<(std::ostream& os, const Fixed& inst){
     os << inst.toFloat();
-    return os;
+        return  os;
 }
 
 Fixed& Fixed::operator=(const Fixed& inst){
@@ -38,10 +38,9 @@ void    Fixed::setRawBits(const int raw) {
 }
 
 int Fixed::toInt( void ) const {
-    return this->frac;
+    return this->fixedNumber;
 }
 
 float Fixed::toFloat( void ) const {
-    return ((float)this->frac / 256);
+    return ((float)this->fixedNumber / 256);
 }
-
