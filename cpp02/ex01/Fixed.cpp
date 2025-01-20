@@ -41,7 +41,11 @@ int Fixed::toInt( void ) const {
     return this->fixedNumber;
 }
 
-float Fixed::toFloat( void ) const {
-    float res = this->fixedNumber / 256;
-    return res;
+// float Fixed::toFloat( void ) const {
+//     float res = this->fixedNumber / 256;
+//     return res;
+// }
+
+float Fixed::toFloat(void) const {
+    return (float)fixedNumber / (1 << frac);
 }
