@@ -2,5 +2,9 @@
 
 std::string Weapon:: &getType() const {
 	return str;
-};
-		void	const &setType(std::string &str);
+}
+
+void	Weapon:: const &set_Type(std::string &str){
+	this
+}
+
