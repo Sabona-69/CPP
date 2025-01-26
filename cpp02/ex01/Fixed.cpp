@@ -47,5 +47,5 @@ int Fixed::toInt( void ) const {
 // }
 
 float Fixed::toFloat(void) const {
-    return (float)fixedNumber / (1 << frac);
+    return (float)fixedNumber / frac;
 }
