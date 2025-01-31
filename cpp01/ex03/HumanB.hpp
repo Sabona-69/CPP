@@ -1,5 +1,5 @@
-#ifndef HUMBNB_HPP
-# define HUMBNB_HPP
+#ifndef HUMANB_HPP
+# define HUMANB_HPP
 
 #include "Weapon.hpp"
 #include <iostream>
@@ -9,12 +9,9 @@ class HumanB{
 		std::string name;
 		Weapon		*weapon;	
 	public:
-		// HumanB();
 		HumanB(const std::string &name);
-		~HumanB();
 		void	attack();
-		void	setWeapon(const Weapon &weapon);
-		
+		void	setWeapon(Weapon &weapon);		
 };
 
 

@@ -1,37 +1,22 @@
  #include <iostream>
- // #include <>
- #include <fstream>
+ #include "Replace.hpp"
 
-int main(int ac, char *av[])
+int main(int ac, const char *av[])
 {
-    (void)ac;
-    if (ac != 4){
-        std::cerr << "Wrong parameters !" << std::endl;
-        exit(1);
+	if (ac != 4){
+		std::cerr << "Wrong parameters !" << std::endl;
+        return false;
     }
-    std::ifstream file(av[1]);
-    if (!file.is_open()){
-        std::cerr << "Cannot open file !" << std::endl;
-        exit(1);
-    }
+	Replace replace;
+	std::string infile = av[1];
+	std::string outfile = av[1] + std::string(".replace");
     std::string s1 = av[2];
     std::string s2 = av[3];
-    std::string read;
-    std::string rep = ".replace";
-    std::string name = av[1] + rep;
-    std::ofstream output(name);
-    if (!output.is_open()){
-        std::cerr << "Cannot open file !" << std::endl;
-        exit(1);
-    }
-    size_t pos = 0;
-    while (std::getline(file, read)){
-        while ((pos = read.find(s1)) != std::string::npos) {
-            read.erase(pos, s1.length());
-            read.insert(pos, s2);
-        }
-            output << read << std::endl;
-    } 
+    if (replace.checkInfile(infile) == false)
+		return (false);
+	if (replace.checkOutfile(outfile) == false)
+		return (false);
+    replace.replaceProcess(s1, s2);
     return 0;
 }
 

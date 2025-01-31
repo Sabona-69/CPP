@@ -1,9 +1,9 @@
 
-NAME	= zombie
+NAME	= war
 
 RM		= rm -f
 
-SRC		= main.cpp \
+SRC		= HumanA.cpp HumanB.cpp Weapon.cpp main.cpp \
 
 CFLAGS	= -Wall -Wextra -Werror #-std=c++98
 
@@ -11,7 +11,7 @@ OBJ		= $(SRC:.cpp=.o)
 
 CC		= c++
 
-INCLUDE = Zombie.hpp
+INCLUDE = HumanA.hpp HumanB.hpp Weapon.hpp
 
 all		: $(NAME)
 			

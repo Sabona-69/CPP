@@ -8,4 +8,4 @@ Zombie* newZombie( std::string name ){
 		return NULL;
     zombie->set_name(name);
     return (zombie);
-};
+}

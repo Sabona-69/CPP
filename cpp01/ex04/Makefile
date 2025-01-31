@@ -3,26 +3,26 @@ NAME	= replace
 
 RM		= rm -f
 
-SRC		= main.cpp \
+SRC		= main.cpp Replace.cpp\
 
-CFLAGS	= -Wall -Wextra -Werror #-std=c++98
+CFLAGS	= -Wall -Wextra -Werror -std=c++98
 
 OBJ		= $(SRC:.cpp=.o)
 
 CC		= c++
 
-INCLUDE = #.hpp
+INCLUDE = Replace.hpp
 
 all		: $(NAME)
-			
+		
 %.o		: %.cpp $(INCLUDE)
-			$(CC) $(CFLAGS) -c $<  -o $@
+		$(CC) $(CFLAGS) -c $<  -o $@
 $(NAME)	: $(OBJ)
-			$(CC) $(CFLAGS) $(OBJ) -o $@
+		$(CC) $(CFLAGS) $(OBJ) -o $@
 clean	: 
-			$(RM) $(OBJ)
+		$(RM) $(OBJ)
 
 fclean	: clean
-			$(RM) $(NAME)
+		$(RM) $(NAME)
 
 re		: fclean all

@@ -1,5 +1,8 @@
 #include "Zombie.hpp"
 
+Zombie::Zombie(){
+}
+
 Zombie::~Zombie(){
     std::cout << name << ":  Destrooooyed ..." << std::endl;
 }
