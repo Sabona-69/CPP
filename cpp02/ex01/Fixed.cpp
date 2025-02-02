@@ -11,9 +11,9 @@ Fixed::~Fixed(){
     std::cout << "Default  destuctor called !" << std::endl;
 }
 
-Fixed::Fixed(const int& inst){
-    this->setRawBits(inst);
-    std::cout << "Copy constuctor called !" << std::endl;
+Fixed::Fixed(const float f) {
+    fixedNumber = roundf(f * (1 << frac)); 
+    std::cout << "Float constructor called" << std::endl;
 }
 
 std::ostream& operator<<(std::ostream& os, const Fixed& inst){
@@ -38,14 +38,9 @@ void    Fixed::setRawBits(const int raw) {
 }
 
 int Fixed::toInt( void ) const {
-    return this->fixedNumber;
+    return this->fixedNumber >> frac ;
 }
 
-// float Fixed::toFloat( void ) const {
-//     float res = this->fixedNumber / 256;
-//     return res;
-// }
-
 float Fixed::toFloat(void) const {
-    return (float)fixedNumber / frac;
+	return (float)fixedNumber / (1 << frac);
 }

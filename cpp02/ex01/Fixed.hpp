@@ -10,7 +10,7 @@ class Fixed{
         static const int    frac;
     public:
         Fixed();
-        Fixed(const int& inst);
+        Fixed(const float inst);
         ~Fixed();
         Fixed& operator=(const Fixed& inst);
         int getRawBits( void ) const;

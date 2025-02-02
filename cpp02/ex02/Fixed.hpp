@@ -27,9 +27,9 @@ class Fixed{
         float   operator-(const Fixed& inst);
         float   operator*(const Fixed& inst);
         float   operator/(const Fixed& inst);
-        Fixed&  Fixed::operator++( void );
         Fixed&  Fixed::operator++( int );
-        Fixed&  Fixed::operator--( void );
+        Fixed&  Fixed::operator++( int );
+        Fixed&  Fixed::operator--( int );
         Fixed&  Fixed::operator--( int );
         Fixed&  min(Fixed& one, Fixed& two);
         Fixed&  min(const Fixed& one, const Fixed& two);
