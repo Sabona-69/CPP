@@ -38,7 +38,7 @@ void    Fixed::setRawBits(const int raw) {
 }
 
 int Fixed::toInt( void ) const {
-    return this->fixedNumber >> frac ;
+	return this->fixedNumber >> frac ;
 }
 
 float Fixed::toFloat(void) const {

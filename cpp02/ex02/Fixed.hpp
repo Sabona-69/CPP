@@ -10,7 +10,7 @@ class Fixed{
         static const int    frac;
     public:
         Fixed();
-        Fixed(const int& inst);
+        Fixed(const float& inst);
         ~Fixed();
         Fixed& operator=(const Fixed& inst);
         int getRawBits( void ) const;
@@ -28,9 +28,9 @@ class Fixed{
         float   operator*(const Fixed& inst);
         float   operator/(const Fixed& inst);
         Fixed&  Fixed::operator++( int );
-        Fixed&  Fixed::operator++( int );
+        Fixed&  Fixed::operator++( void );
         Fixed&  Fixed::operator--( int );
-        Fixed&  Fixed::operator--( int );
+        Fixed&  Fixed::operator--( void );
         Fixed&  min(Fixed& one, Fixed& two);
         Fixed&  min(const Fixed& one, const Fixed& two);
         Fixed&  max(Fixed& one, Fixed& two);

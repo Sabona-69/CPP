@@ -11,7 +11,7 @@ Fixed::~Fixed(){
     std::cout << "Default  destuctor called !" << std::endl;
 }
 
-Fixed::Fixed(const float f) {
+Fixed::Fixed(const float &f) {
     fixedNumber = roundf(f * (1 << frac)); 
     std::cout << "Float constructor called" << std::endl;
 }
@@ -69,8 +69,8 @@ bool Fixed::operator!=(const Fixed& inst){
     return this->toFloat() != inst.toFloat();
 }
 
-Fixed& Fixed::operator++( void ){
-    ++this->fixedNumber; //toFloat() + 1;
+Fixed& Fixed::operator++( int ){
+    ++this->fixedNumber;
     return  *this;
 }
 
@@ -80,7 +80,7 @@ Fixed& Fixed::operator++( int ){
     return  temp;
 }
 
-Fixed& Fixed::operator--( void ){
+Fixed& Fixed::operator--( int ){
     --this->fixedNumber; //toFloat() + 1;
     return  *this;
 }
