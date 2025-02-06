@@ -36,5 +36,7 @@ class Fixed{
         Fixed&  max(Fixed& one, Fixed& two);
         Fixed&  max(const Fixed& one, const Fixed& two);
 };
+
 std::ostream& operator<<(std::ostream& os, const Fixed& inst);
+
 #endif // !FIXED_HPP

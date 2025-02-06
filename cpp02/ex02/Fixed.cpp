@@ -81,7 +81,7 @@ Fixed& Fixed::operator++( int ){
 }
 
 Fixed& Fixed::operator--( int ){
-    --this->fixedNumber; //toFloat() + 1;
+    --this->fixedNumber;
     return  *this;
 }
 
