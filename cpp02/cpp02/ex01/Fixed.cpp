@@ -12,6 +12,16 @@ Fixed::Fixed(Fixed const &assign){
     this->raw = assign.raw;
 }
 
+Fixed::Fixed(int const &assign){
+    // std::cout << "Copy constructor called\n";
+    this->raw = assign.raw;
+}
+
+Fixed::Fixed(float const &assign){
+    // std::cout << "Copy constructor called\n";
+    this->raw = roundf(assign);
+}
+
 Fixed&	Fixed::operator=(Fixed& assign){
 	std::cout << "Copy assignment operator called\n";
 	this->raw += assign.raw;
@@ -31,3 +41,11 @@ void Fixed:: setRawBits( int const raw ){
     std::cout << "setRawBits member function called\n";
 	this->raw = raw;
 }
+
+float	Fixed::toFLoat( void ) const{
+	std::cout 	
+}
+
+int	Fixed::toInt( void ) const{
+}
+
