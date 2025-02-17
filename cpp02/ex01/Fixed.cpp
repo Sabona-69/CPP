@@ -13,7 +13,6 @@ Fixed::~Fixed(){
 
 Fixed::Fixed(const float f) {
     fixedNumber = roundf(f * (1 << frac)); 
-    std::cout << "Float constructor called" << std::endl;
 }
 
 std::ostream& operator<<(std::ostream& os, const Fixed& inst){

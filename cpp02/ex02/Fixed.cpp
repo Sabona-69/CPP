@@ -16,17 +16,6 @@ Fixed::Fixed(const float &f) {
     std::cout << "Float constructor called" << std::endl;
 }
 
-std::ostream& operator<<(std::ostream& os, const Fixed& inst){
-    os << inst.toFloat();
-        return  os;
-}
-
-Fixed& Fixed::operator=(const Fixed& inst){
-    std::cout << "Copy assignement operator called !" << std::endl;
-    this->setRawBits(inst.getRawBits());
-    return *this;
-}
-
 int Fixed::getRawBits() const{
     std::cout << "getRawBits member function called !" << std::endl;
     return fixedNumber;
@@ -43,6 +32,17 @@ int Fixed::toInt( void ) const {
 
 float Fixed::toFloat(void) const {
 	return (float)fixedNumber / (1 << frac);
+}
+
+std::ostream& operator<<(std::ostream& os, const Fixed& inst){
+    os << inst.toFloat();
+        return  os;
+}
+
+Fixed& Fixed::operator=(const Fixed& inst){
+    std::cout << "Copy assignement operator called !" << std::endl;
+    this->setRawBits(inst.getRawBits());
+    return *this;
 }
 
 bool Fixed::operator>(const Fixed& inst){
@@ -69,23 +69,23 @@ bool Fixed::operator!=(const Fixed& inst){
     return this->toFloat() != inst.toFloat();
 }
 
-Fixed& Fixed::operator++( int ){
+Fixed& Fixed::operator++( void ){
     ++this->fixedNumber;
     return  *this;
 }
 
-Fixed& Fixed::operator++( int ){
+Fixed Fixed::operator++( int ){
     Fixed temp = *this;
     ++this->fixedNumber;
     return  temp;
 }
 
-Fixed& Fixed::operator--( int ){
+Fixed& Fixed::operator--( ){
     --this->fixedNumber;
     return  *this;
 }
 
-Fixed& Fixed::operator--( int ){
+Fixed& Fixed::operator--( ){
     Fixed temp = *this;
     --this->fixedNumber;
     return  temp;
