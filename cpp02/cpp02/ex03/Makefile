@@ -3,15 +3,15 @@ NAME	= fixed
 
 RM		= rm -f
 
-SRC		= Fixed.cpp main.cpp \
+SRC		= Fixed.cpp Point.cpp main.cpp bsp.cpp\
 
-CFLAGS	= #-Wall -Wextra -Werror -std=c++98
+CFLAGS	= -Wall -Wextra -Werror -std=c++98
 
 OBJ		= $(SRC:.cpp=.o)
 
 CC		= c++
 
-INCLUDE = Fixed.hpp
+INCLUDE = Fixed.hpp Point.hpp
 
 all		: $(NAME)
 			
