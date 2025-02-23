@@ -19,10 +19,3 @@ int main(int ac, const char *av[])
     replace.replaceProcess(s1, s2);
     return 0;
 }
-
-
-
-
-
-
-
