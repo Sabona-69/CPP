@@ -34,10 +34,10 @@ class Fixed
 		float	operator+(const Fixed& assign);
 		float	operator-(const Fixed& assign);
 		float	operator/(const Fixed& assign);
-		static Fixed&	min(int& one, int& two);
-		static Fixed&	min(const int& one,const int& two);
-		static Fixed&	max(int& one, int& two);
-		static Fixed&	max(const int& one,const int& two);
+		static 			Fixed&	min(Fixed& one, Fixed& two);
+		static const	Fixed&	min(const Fixed& one,const Fixed& two);
+		static			Fixed&	max(Fixed& one, Fixed& two);
+		static const	Fixed&	max(const Fixed& one,const Fixed& two);
 
 
 	};
