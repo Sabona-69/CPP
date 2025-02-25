@@ -5,7 +5,7 @@ RM		= rm -f
 
 SRC		= Zombie.cpp  main.cpp zombieHorde.cpp \
 
-CFLAGS	= -Wall -Wextra -Werror -std=c++98
+CFLAGS	= -Wall -Wextra -Werror #-std=c++98
 
 OBJ		= $(SRC:.cpp=.o)
 

@@ -1,42 +1,39 @@
 #ifndef FIXED_HPP
-# define FIXED_HPP
+#define FIXED_HPP
 
 #include <iostream>
 #include <cmath>
 
-class Fixed{
-    private:
-        int                fixedNumber;
-        static const int    frac;
-    public:
-        Fixed();
-        Fixed(const int& inst);
-        ~Fixed();
-        Fixed& operator=(const Fixed& inst);
-        int getRawBits( void ) const;
-        void setRawBits( int const raw ) ;
-        float   toFloat( void ) const;
-        int     toInt ( void ) const;
-        bool    operator>(const Fixed& inst);
-        bool    operator<(const Fixed& inst);
-        bool    operator>=(const Fixed& inst);
-        bool    operator<=(const Fixed& inst);
-        bool    operator==(const Fixed& inst);
-        bool    operator!=(const Fixed& inst);
-        float   operator+(const Fixed& inst);
-        float   operator-(const Fixed& inst);
-        float   operator*(const Fixed& inst);
-        float   operator/(const Fixed& inst);
-        Fixed&  Fixed::operator++( void );
-        Fixed&  Fixed::operator++( int );
-        Fixed&  Fixed::operator--( void );
-        Fixed&  Fixed::operator--( int );
-        Fixed&  min(Fixed& one, Fixed& two);
-        Fixed&  min(const Fixed& one, const Fixed& two);
-        Fixed&  max(Fixed& one, Fixed& two);
-        Fixed&  max(const Fixed& one, const Fixed& two);
-};
+class Fixed
+{
+	private:
+		static const int	frac;
+		int					raw;
+	public:
+		Fixed();
+		Fixed(float assign);
+		Fixed(int assign);
+		Fixed(const Fixed& assign);	
+		~Fixed();
+		int		getRawBits( void ) const;
+		void	setRawBits( int const raw );
+		float	toFloat( void ) const;
+		int		toInt( void ) const;
+		Fixed&	operator=(const Fixed& assign);
+		bool	operator>(const Fixed& assign);
+		bool	operator<(const Fixed& assign);
+		bool	operator>=(const Fixed& assign);
+		bool	operator<=(const Fixed& assign);
+		bool	operator==(const Fixed& assign);
+		bool	operator!=(const Fixed& assign);
+		Fixed&	operator++( void );
+		Fixed	operator++( int );
+		Fixed&	operator--( void );
+		Fixed	operator--( int );
+		Fixed	operator*(const Fixed& assign);
+		Fixed	operator+(const Fixed& assign);
+		Fixed	operator-(const Fixed& assign);
+		Fixed	operator/(const Fixed& assign);
 
-std::ostream& operator<<(std::ostream& os, const Fixed& inst);
-
-#endif // !FIXED_HPP
+	};
+#endif

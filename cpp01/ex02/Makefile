@@ -1,5 +1,5 @@
 
-NAME	= zombie
+NAME	= RefPtr
 
 RM		= rm -f
 
@@ -11,7 +11,7 @@ OBJ		= $(SRC:.cpp=.o)
 
 CC		= c++
 
-INCLUDE = Zombie.hpp
+INCLUDE = 
 
 all		: $(NAME)
 			

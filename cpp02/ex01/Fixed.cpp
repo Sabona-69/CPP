@@ -3,43 +3,53 @@
 const int Fixed::frac = 8;
 
 Fixed::Fixed(){
-    this->fixedNumber = 0;
-    std::cout << "Default  constuctor called !" << std::endl;
+    std::cout << "Default constructor called\n";
+	this->raw = 0;
+}
+
+Fixed::Fixed(const Fixed& assign){
+    std::cout << "Copy constructor called\n";
+    this->raw = assign.raw;
+}
+
+Fixed::Fixed(int assign){	
+	std::cout << "Int constructor called\n";
+    this->raw = assign * (1 << frac);
+}
+
+Fixed::Fixed(float assign){
+	std::cout << "Float constructor called\n";
+    this->raw = roundf(assign * (1 << frac));
+}
+
+Fixed&	Fixed::operator=(const Fixed& assign){
+	std::cout << "Copy assignment operator called\n";
+	this->setRawBits(assign.getRawBits());
+	return (*this);
 }
 
 Fixed::~Fixed(){
-    std::cout << "Default  destuctor called !" << std::endl;
+	std::cout << "Destructor called\n";
 }
 
-Fixed::Fixed(const float f) {
-    fixedNumber = roundf(f * (1 << frac)); 
+int	Fixed::getRawBits( void ) const{
+	return raw;
 }
 
-std::ostream& operator<<(std::ostream& os, const Fixed& inst){
-    os << inst.toFloat();
-        return  os;
+void Fixed:: setRawBits( int const raw ){
+	this->raw = raw;
 }
 
-Fixed& Fixed::operator=(const Fixed& inst){
-    std::cout << "Copy assignement operator called !" << std::endl;
-    this->setRawBits(inst.getRawBits());
-    return *this;
+float	Fixed::toFloat( void ) const{
+	return (roundf(this->raw) / (1 << frac));
 }
 
-int Fixed::getRawBits() const{
-    std::cout << "getRawBits member function called !" << std::endl;
-    return fixedNumber;
+int	Fixed::toInt( void ) const{
+	return (this->raw / (1 << frac));
 }
 
-void    Fixed::setRawBits(const int raw) {
-    std::cout << "setRawBits member function called !" << std::endl;
-    fixedNumber = raw;
+std::ostream& operator<<(std::ostream& os, Fixed assign){
+	os << assign.toFloat();
+	return os;
 }
 
-int Fixed::toInt( void ) const {
-	return this->fixedNumber >> frac ;
-}
-
-float Fixed::toFloat(void) const {
-	return (float)fixedNumber / (1 << frac);
-}

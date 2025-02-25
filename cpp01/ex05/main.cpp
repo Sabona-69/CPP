@@ -3,7 +3,7 @@
 int main () {
     Harl test;
 
-    // test.complain("DEBUG");
-    test.complain("WARNING");
+    test.complain("DEBUG");
+    // test.complain("WARNING");
     return 0;
 }
