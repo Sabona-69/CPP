@@ -19,18 +19,24 @@ ClapTrap:: ~ClapTrap(){
 
 }
 
-ClapTrap   ClapTrap::operator=(const ClapTrap &assign){
+// ClapTrap   ClapTrap::operator=(const ClapTrap &assign){
 
-}
+// }
 
 void ClapTrap::attack(const std::string& target){
-
+    
 }
 
 void ClapTrap::takeDamage(unsigned int amount){
-
+    if (this->health != 0 && this->energy != 0 && amount > 0){
+        this->health -= amount;
+        this->energy -= 1;
+    }
 }
 
 void ClapTrap::beRepaired(unsigned int amount){
-
+    if (this->health != 0 && this->energy != 0){
+        this->health += amount;
+        this->energy -= 1;
+    }
 }
