@@ -13,7 +13,7 @@ Point&	Point::operator=(Point& assign){
 }
 
 Point:: ~Point(){
-	
+	 
 }
 
 Fixed	Point::getX() const{

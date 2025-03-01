@@ -19,19 +19,11 @@ Fixed::Fixed(float assign){
 }
 
 Fixed&	Fixed::operator=(const Fixed& assign){
-	this->setRawBits(assign.getRawBits());
+	this->raw = assign.raw;
 	return (*this);
 }
 
 Fixed::~Fixed(){
-}
-
-int	Fixed::getRawBits( void ) const{
-	return raw;
-}
-
-void Fixed:: setRawBits( int const raw ){
-	this->raw = raw;
 }
 
 float	Fixed::toFloat( void ) const{
