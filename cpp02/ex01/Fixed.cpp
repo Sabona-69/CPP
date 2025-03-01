@@ -24,20 +24,12 @@ Fixed::Fixed(float assign){
 
 Fixed&	Fixed::operator=(const Fixed& assign){
 	std::cout << "Copy assignment operator called\n";
-	this->setRawBits(assign.getRawBits());
+	this->raw = assign.raw;
 	return (*this);
 }
 
 Fixed::~Fixed(){
 	std::cout << "Destructor called\n";
-}
-
-int	Fixed::getRawBits( void ) const{
-	return raw;
-}
-
-void Fixed:: setRawBits( int const raw ){
-	this->raw = raw;
 }
 
 float	Fixed::toFloat( void ) const{
