@@ -21,5 +21,5 @@ class Fixed
 		int		toInt( void ) const;
 	};
 
-	std::ostream& operator<<(std::ostream& os, Fixed assign);
+	std::ostream& operator<<(std::ostream& os, const Fixed& assign);
 #endif

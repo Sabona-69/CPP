@@ -17,21 +17,24 @@ class Fixed
 		~Fixed();
 		float	toFloat( void ) const;
 		int		toInt( void ) const;
-		Fixed&	operator=(const Fixed& assign);
-		bool	operator>(const Fixed& assign);
-		bool	operator<(const Fixed& assign);
-		bool	operator>=(const Fixed& assign);
-		bool	operator<=(const Fixed& assign);
-		bool	operator==(const Fixed& assign);
-		bool	operator!=(const Fixed& assign);
+
+		bool	operator>(const Fixed& assign) const ;
+		bool	operator<(const Fixed& assign) const ;
+		bool	operator>=(const Fixed& assign) const ;
+		bool	operator<=(const Fixed& assign) const ;
+		bool	operator==(const Fixed& assign) const ;
+		bool	operator!=(const Fixed& assign) const ;
+
 		Fixed&	operator++( void );
 		Fixed	operator++( int );
 		Fixed&	operator--( void );
 		Fixed	operator--( int );
-		float	operator*(const Fixed& assign);
-		float	operator+(const Fixed& assign);
-		float	operator-(const Fixed& assign);
-		float	operator/(const Fixed& assign);
+
+		Fixed&	operator=(const Fixed& assign);
+		Fixed	operator+(const Fixed& assign);
+		Fixed	operator*(const Fixed& assign);
+		Fixed	operator-(const Fixed& assign);
+		Fixed	operator/(const Fixed& assign);
 		static 			Fixed&	min(Fixed& one, Fixed& two);
 		static const	Fixed&	min(const Fixed& one,const Fixed& two);
 		static			Fixed&	max(Fixed& one, Fixed& two);
@@ -39,5 +42,5 @@ class Fixed
 
 
 	};
-	std::ostream& operator<<(std::ostream& os, Fixed assign);
+	std::ostream& operator<<(std::ostream& os, const Fixed& assign);
 #endif
