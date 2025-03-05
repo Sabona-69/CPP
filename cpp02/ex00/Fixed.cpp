@@ -9,12 +9,12 @@ Fixed::Fixed(){
 
 Fixed::Fixed(Fixed const &assign){
     std::cout << "Copy constructor called\n";
-    this->raw = assign.raw;
+    this->raw = assign.getRawBits();
 }
 
 Fixed&	Fixed::operator=(const Fixed& assign){
 	std::cout << "Copy assignment operator called\n";
-	this->setRawBits(assign.getRawBits());
+	this->raw = assign.getRawBits();
 	return (*this);
 }
 

@@ -27,40 +27,39 @@ Fixed::~Fixed(){
 }
 
 float	Fixed::toFloat( void ) const{
-	return (roundf(this->raw) / (1 << frac));
+	return ((float)this->raw / (1 << frac));
 }
 
 int	Fixed::toInt( void ) const{
 	return (this->raw / (1 << frac));
 }
 
-std::ostream& operator<<(std::ostream& os, Fixed assign){
+std::ostream& operator<<(std::ostream& os, const Fixed& assign){
 	os << assign.toFloat();
 	return os;
 }
 
-bool Fixed::operator>(const Fixed& assign){
-
+bool Fixed::operator>(const Fixed& assign) const{
 	return (this->toFloat() > assign.toFloat());
 }
 
-bool Fixed::operator<(const Fixed& assign){
+bool Fixed::operator<(const Fixed& assign) const{
     return this->toFloat() < assign.toFloat();
 }
 
-bool Fixed::operator<=(const Fixed& assign){
+bool Fixed::operator<=(const Fixed& assign) const{
     return this->toFloat() <= assign.toFloat();
 }
 
-bool Fixed::operator>=(const Fixed& assign){
+bool Fixed::operator>=(const Fixed& assign) const{
     return this->toFloat() >= assign.toFloat();
 }
 
-bool Fixed::operator==(const Fixed& assign){
+bool Fixed::operator==(const Fixed& assign) const{
     return this->toFloat() == assign.toFloat();
 }
 
-bool Fixed::operator!=(const Fixed& assign){
+bool Fixed::operator!=(const Fixed& assign) const{
     return this->toFloat() != assign.toFloat();
 }
 
@@ -86,21 +85,23 @@ Fixed Fixed::operator--( int ){
     return  temp;
 }
 
-float Fixed::operator*(const Fixed& assign){
-	return this->toFloat() * assign.toFloat();
+Fixed Fixed::operator*(const Fixed& assign){
+	return Fixed(this->toFloat() * assign.toFloat());
 }
 
-float Fixed::operator+(const Fixed& assign){
-    return this->toFloat() + assign.toFloat();
+Fixed Fixed::operator+(const Fixed& assign){
+    return Fixed(this->toFloat() + assign.toFloat());
 }
 
-float Fixed::operator-(const Fixed& assign){
-    return this->toFloat() - assign.toFloat();
+Fixed Fixed::operator-(const Fixed& assign){
+    return Fixed(this->toFloat() - assign.toFloat());
 }
 
 
-float Fixed::operator/(const Fixed& assign){
-    return this->toFloat() / assign.toFloat();
+Fixed Fixed::operator/(const Fixed& assign){
+    if (assign.toFloat() == 0)
+        return *this;
+    return Fixed(this->toFloat() / assign.toFloat());
 }
 
 Fixed&   Fixed::min(Fixed& one, Fixed& two){

@@ -27,35 +27,39 @@ Fixed::~Fixed(){
 }
 
 float	Fixed::toFloat( void ) const{
-	return (roundf(this->raw) / (1 << frac));
+	return ((float)this->raw / (1 << frac));
 }
 
 int	Fixed::toInt( void ) const{
 	return (this->raw / (1 << frac));
 }
 
-bool Fixed::operator>(const Fixed& assign){
+std::ostream& operator<<(std::ostream& os, const Fixed& assign){
+	os << assign.toFloat();
+	return os;
+}
 
+bool Fixed::operator>(const Fixed& assign) const{
 	return (this->toFloat() > assign.toFloat());
 }
 
-bool Fixed::operator<(const Fixed& assign){
+bool Fixed::operator<(const Fixed& assign) const{
     return this->toFloat() < assign.toFloat();
 }
 
-bool Fixed::operator<=(const Fixed& assign){
+bool Fixed::operator<=(const Fixed& assign) const{
     return this->toFloat() <= assign.toFloat();
 }
 
-bool Fixed::operator>=(const Fixed& assign){
+bool Fixed::operator>=(const Fixed& assign) const{
     return this->toFloat() >= assign.toFloat();
 }
 
-bool Fixed::operator==(const Fixed& assign){
+bool Fixed::operator==(const Fixed& assign) const{
     return this->toFloat() == assign.toFloat();
 }
 
-bool Fixed::operator!=(const Fixed& assign){
+bool Fixed::operator!=(const Fixed& assign) const{
     return this->toFloat() != assign.toFloat();
 }
 
@@ -93,7 +97,33 @@ Fixed Fixed::operator-(const Fixed& assign){
     return Fixed(this->toFloat() - assign.toFloat());
 }
 
+
 Fixed Fixed::operator/(const Fixed& assign){
+    if (assign.toFloat() == 0)
+        return *this;
     return Fixed(this->toFloat() / assign.toFloat());
 }
 
+Fixed&   Fixed::min(Fixed& one, Fixed& two){
+    if (one.toFloat() < two.toFloat())
+        return one;
+    return two;
+}
+
+const Fixed&   Fixed::min(const Fixed& one,const Fixed& two){
+    if (one.toFloat() < two.toFloat())
+        return one;
+    return two;
+}
+
+Fixed&   Fixed::max(Fixed& one, Fixed& two){
+    if (one.toFloat() > two.toFloat())
+        return one;
+    return two;
+}
+
+const Fixed&   Fixed::max(const Fixed& one,const Fixed& two){
+    if (one.toFloat() > two.toFloat())
+        return one;
+    return two;
+}
