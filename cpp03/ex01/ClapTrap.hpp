@@ -3,7 +3,7 @@
 #include <iostream>
 
 class ClapTrap{
-    private:
+    protected:
         std::string name;
         int         energy;
         int         health;
@@ -13,9 +13,9 @@ class ClapTrap{
     ClapTrap(const ClapTrap &assign);
     ClapTrap(const std::string name);
     ~ClapTrap();
-    ClapTrap    operator=(const ClapTrap &assign);
-    void        attack(const std::string& target);
-    void        takeDamage(unsigned int amount);
-    void        beRepaired(unsigned int amount);
+    virtual void    attack(const std::string& target);
+    ClapTrap        operator=(const ClapTrap &assign);
+    void            takeDamage(unsigned int amount);
+    void            beRepaired(unsigned int amount);
 
 };
