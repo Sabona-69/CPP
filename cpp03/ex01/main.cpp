@@ -1,13 +1,13 @@
 #include "ClapTrap.hpp"
+#include "ScavTrap.hpp"
 
 
 int main()
 {
-    ClapTrap a("user 1");
+    ScavTrap b;
 
-    a.attack("user 2");
-    a.beRepaired(2);
-    a.takeDamage(10);
+    b.attack("allo");
+    // std::cout <<  << std::endl;
     return 0;
 
 }

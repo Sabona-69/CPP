@@ -39,17 +39,19 @@ ClapTrap   ClapTrap::operator=(const ClapTrap &assign){
 }
 
 void ClapTrap::attack(const std::string& target){
-    if (this->energy > 0){
+    if (this->energy > 0 && this->health > 0){
         std::cout << "ClapTrap " << this->name << " attacks " << target << ", causing " << this->damage  << " points of damage!" << std::endl; 
         this->energy--;
     }
-}
+} 
 
 void ClapTrap::takeDamage(unsigned int amount){
-    int     check = this->health - amount;
-    if (check > -1 && this->energy > 0 && amount > 0){
+    if (this->energy > 0 && amount >= 0 && this->health > 0){
         std::cout << "ClapTrap " << this->name << " took " << amount << " points of damage!" << std::endl; 
-        this->health = check;
+        if (this->health < amount)
+            this->health = 0;
+        else
+            this->health -= amount;
         this->energy -= 1;
     }
 }
