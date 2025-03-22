@@ -1,5 +1,5 @@
 
-NAME	= fixed
+NAME	= clap
 
 RM		= rm -f
 

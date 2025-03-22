@@ -2,6 +2,7 @@
 
 #include <iostream>
 
+
 class ClapTrap{
     protected:
         std::string name;

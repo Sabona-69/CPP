@@ -9,7 +9,7 @@ ClapTrap:: ClapTrap(){
 
 }
 ClapTrap:: ClapTrap(const ClapTrap &assign){
-    this->name = assign.name ;
+    this->name = assign.name ;  
     this->health = assign.health;
     this->energy = assign.energy;
     this->damage = assign.damage;
@@ -46,9 +46,9 @@ void ClapTrap::attack(const std::string& target){
 } 
 
 void ClapTrap::takeDamage(unsigned int amount){
-    if (this->energy > 0 && amount >= 0 && this->health > 0){
+    if (this->energy > 0 && (int)amount >= 0 && this->health > 0){
         std::cout << "ClapTrap " << this->name << " took " << amount << " points of damage!" << std::endl; 
-        if (this->health < amount)
+        if (this->health < (int)amount)
             this->health = 0;
         else
             this->health -= amount;
