@@ -5,7 +5,7 @@ RM		= rm -f
 
 SRC		= DiamondTrap.cpp FragTrap.cpp ClapTrap.cpp ScavTrap.cpp main.cpp \
 
-CFLAGS	= -Wall -Wextra -Werror -std=c++98
+CFLAGS	= -Wall -Wextra -Werror -std=c++98 -Wno-shadow
 
 OBJ		= $(SRC:.cpp=.o)
 
