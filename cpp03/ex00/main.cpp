@@ -1,13 +1,13 @@
 #include "ClapTrap.hpp"
 
+int main() {
+    ClapTrap a("RobotA");
+    ClapTrap b("RobotB");
 
-int main()
-{
-    ClapTrap a("user 1");
+    a.attack("Target1");
+    b.takeDamage(5);
+    b.beRepaired(3);
+    b.attack("Target2");
 
-    a.attack("user 2");
-    a.beRepaired(2);
-    a.takeDamage(10);
     return 0;
-
 }
