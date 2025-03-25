@@ -25,3 +25,8 @@ void    Animal::makeSound() const {
 }
 
 std::string     Animal::getType() const { return this->type; };
+
+
+void     Animal::set_Brain(std::string& str, int index){
+    this->ideas[index] = str;
+}

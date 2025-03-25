@@ -14,6 +14,7 @@ class Animal
         Animal&   operator=(const Animal &assign);
         virtual void     makeSound() const;
         std::string     getType() const;
+        void            set_Brain(std::string& str, int index);
 };
 
 #endif

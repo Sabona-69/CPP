@@ -2,10 +2,12 @@
 
 Cat::Cat(){
     this->type = "Cat";
+    this->brain = new Brain; 
     std::cout << "Constructor Cat called !" << std::endl;
 }
     
 Cat::~Cat(){
+    delete brain;
     std::cout << "Destructor Cat called !" << std::endl;
 }
     
