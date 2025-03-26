@@ -27,6 +27,5 @@ void    Ice::use(ICharacter& target){
 }
 
 Ice*   Ice::clone() const{
-    Ice    *cloned = new Ice();
-    return cloned;
+    return new Ice();
 }
