@@ -19,9 +19,5 @@ Animal&   Animal::operator=(const Animal &assign){
     }
     return *this;
 }
-    
-void    Animal::makeSound() const {
-    std::cout << "No sound founded !" << std::endl;
-}
 
 std::string     Animal::getType() const { return this->type; };

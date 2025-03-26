@@ -1,11 +1,11 @@
 
-NAME	= Deep
+NAME	= Abstract
 
 RM		= rm -f
 
 SRC		=  Brain.cpp WrongAnimal.cpp  WrongCat.cpp Animal.cpp Dog.cpp Cat.cpp main.cpp \
 
-CFLAGS	= -Wall -Wextra -Werror -std=c++98 #-fsanitize=address
+CFLAGS	= -Wall -Wextra -Werror -std=c++98 -fsanitize=address
 
 OBJ		= $(SRC:.cpp=.o)
 
