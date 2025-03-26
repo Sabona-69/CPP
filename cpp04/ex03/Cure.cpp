@@ -26,6 +26,5 @@ void    Cure::use(ICharacter& target){
 }
 
 Cure*   Cure::clone() const{
-    Cure    *cloned = new Cure();
-    return cloned;
+    return new Cure();
 }
