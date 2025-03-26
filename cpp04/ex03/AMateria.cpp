@@ -16,6 +16,7 @@ AMateria::AMateria(std::string const &type){
 
 
 AMateria::AMateria(const AMateria &assign){
+    
     std::cout << "AMateria Copy Constructor called !" << std::endl;
 }
 
@@ -30,6 +31,11 @@ AMateria&   AMateria::operator=(const AMateria &assign){
 AMateria::AMateria(std::string const & type){
 
 }
+
+void AMateria::use(ICharacter& target){
+    std::cout << "Nothing here to use !\n" ;
+};
+
 
 std::string const& AMateria::getType() const {
     return this->type;
