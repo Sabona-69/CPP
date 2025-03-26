@@ -1,17 +1,17 @@
 
-NAME	= Deep
+NAME	= inteface
 
 RM		= rm -f
 
-SRC		=  Brain.cpp WrongAnimal.cpp  WrongCat.cpp Animal.cpp Dog.cpp Cat.cpp main.cpp \
+SRC		=  AMateria.cpp Ice.cpp Cure.cpp ICharacter.cpp IMateriaSource.cpp main.cpp \
 
-CFLAGS	= -Wall -Wextra -Werror -std=c++98 #-fsanitize=address
+CFLAGS	= -Wall -Wextra -Werror -std=c++98 -fsanitize=address
 
 OBJ		= $(SRC:.cpp=.o)
 
 CC		= c++
 
-INCLUDE = Brain.hpp WrongAnimal.hpp  WrongCat.hpp Animal.hpp Dog.hpp Cat.hpp
+INCLUDE = AMateria.hpp Ice.hpp Cure.hpp ICharacter.hpp IMateriaSource.hpp
 
 all		: $(NAME)
 			
