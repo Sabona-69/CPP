@@ -13,21 +13,17 @@ AMateria::~AMateria(){
 AMateria::AMateria(std::string const &type) : type(type){};
 
 
-AMateria::AMateria(const AMateria &assign){
-    
+AMateria::AMateria(const AMateria &assign) : type(assign.type){
     std::cout << "AMateria Copy Constructor called !" << std::endl;
 }
 
 
 AMateria&   AMateria::operator=(const AMateria &assign){
     if (this != &assign){
-        ;
+        this->type = assign.type;
+        
     }
     return *this;
-}
-
-AMateria::AMateria(std::string const & type){
-
 }
 
 void AMateria::use(ICharacter& target){
