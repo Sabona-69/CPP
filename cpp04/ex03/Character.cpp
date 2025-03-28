@@ -5,15 +5,13 @@ Character:: Character(){
         this->inventory[i] = NULL;
         this->garbage[i] = NULL;
     }
-    std::cout << "Default Character Constructor called !" << std::endl;
 }
 
 Character:: Character(const Character &assign) : name(assign.name) {
     for (int i = 0; i < 4; i++){
         this->inventory[i] = (assign.inventory[i] ? assign.inventory[i]->clone() : NULL);
-        this->garbage[i] = this->inventory[i]; 
+        this->garbage[i] = NULL; 
     }
-    std::cout << "Character Copy Constructor called !" << std::endl;
 }
 
 Character:: Character(const std::string  &assign) : name(assign) {
@@ -27,23 +25,18 @@ Character&   Character::operator=(const Character &assign){
     if(this != &assign){
         for (int i = 0; i < 4; i++)
         {
-            if (this->inventory[i])
-                delete this->inventory[i];
-            if (this->garbage[i])
-                delete this->garbage[i],this->garbage[i] = NULL;
+            delete this->inventory[i];
             this->inventory[i] = (assign.inventory[i] ? assign.inventory[i]->clone() : NULL);
         }
     }
+    return *this;
 }
 
 Character::~Character() {
     for (int i = 0; i < 4; i++){
         delete this->inventory[i];
-        // this->inventory[i] = NULL;
         delete this->garbage[i];
-        // this->garbage[i] = NULL;
     }
-    std::cout << "Default Character Destructor called !" << std::endl;
 };
 
 std::string const &Character::getName() const{
@@ -51,9 +44,13 @@ std::string const &Character::getName() const{
 }
 
 void Character::equip(AMateria* m){
+    if (!m )
+        return ;
     for (int i = 0; i < 4; i++){
-        if (!this->inventory[i])
-            this->inventory[i] = m->clone();
+        if (!this->inventory[i]){
+            this->inventory[i] = m;
+            return ;
+        }
     }
 }
 

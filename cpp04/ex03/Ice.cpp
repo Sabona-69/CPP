@@ -1,22 +1,17 @@
 #include "Ice.hpp" 
 
-Ice::Ice(){
-    std::cout << "Default Ice Constructor called !" << std::endl;
+Ice::Ice() : AMateria("ice") {
 }
 
 Ice::~Ice(){
-    
-    std::cout << "Default Ice Destructor called !" << std::endl;
 }
 
-Ice::Ice(const Ice &assign){
-    
-    std::cout << "Ice Copy Constructor called !" << std::endl;
+Ice::Ice(const Ice &assign) :  AMateria(assign){
 }
 
 Ice&   Ice::operator=(const Ice &assign){
     if (this != &assign){
-
+        this->type = assign.type;
     }
     return *this;
 }
