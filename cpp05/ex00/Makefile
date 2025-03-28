@@ -1,17 +1,17 @@
 
-NAME	= Abstract
+NAME	= bureaucrat
 
 RM		= rm -f
 
-SRC		=  Brain.cpp WrongAnimal.cpp  WrongCat.cpp Animal.cpp Dog.cpp Cat.cpp main.cpp \
+SRC		= Bureaucrat.cpp main.cpp \
 
-CFLAGS	= -Wall -Wextra -Werror -std=c++98 # -fsanitize=address
+CFLAGS	= -Wall -Wextra -Werror -std=c++98 #-g3 # -fsanitize=address
 
 OBJ		= $(SRC:.cpp=.o)
 
 CC		= c++
 
-INCLUDE = Brain.hpp WrongAnimal.hpp  WrongCat.hpp Animal.hpp Dog.hpp Cat.hpp
+INCLUDE = Bureaucrat.hpp
 
 all		: $(NAME)
 			

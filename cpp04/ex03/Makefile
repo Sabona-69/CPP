@@ -3,15 +3,15 @@ NAME	= inteface
 
 RM		= rm -f
 
-SRC		=  AMateria.cpp Ice.cpp Cure.cpp ICharacter.cpp IMateriaSource.cpp main.cpp \
+SRC		=  AMateria.cpp Character.cpp Cure.cpp Ice.cpp main.cpp MateriaSource.cpp \
 
-CFLAGS	= -Wall -Wextra -Werror -std=c++98 -fsanitize=address
+CFLAGS	= -Wall -Wextra -Werror -std=c++98 #-g3 # -fsanitize=address
 
 OBJ		= $(SRC:.cpp=.o)
 
 CC		= c++
 
-INCLUDE = AMateria.hpp Ice.hpp Cure.hpp ICharacter.hpp IMateriaSource.hpp
+INCLUDE = AMateria.hpp Character.hpp Cure.hpp Ice.hpp ICharacter.hpp IMateriaSource.hpp MateriaSource.hpp
 
 all		: $(NAME)
 			

@@ -1,30 +1,51 @@
 #include "MateriaSource.hpp"
 
 MateriaSource::MateriaSource(){
-    std::cout << "Default MateriaSource Constructor called !" << std::endl;
+    for (int i = 0; i < 4; i++)
+        this->templates[i] = NULL;
 }
 
 MateriaSource::~MateriaSource(){
-    std::cout << "Default MateriaSource Destructor called !" << std::endl;
+    for (int i = 0; i < 4; i++)
+        delete templates[i];
+        // if (templates[i])
 }
 
 MateriaSource::MateriaSource(const MateriaSource &assign){
-    std::cout << "MateriaSource Copy Constructor called !" << std::endl;
+    for (int i = 0; i < 4; i++)
+        this->templates[i] = (assign.templates[i] ? assign.templates[i]->clone() : NULL);
 }
 
 MateriaSource& MateriaSource::operator=(const MateriaSource &assign){
-    if (this != &assign){
-        // Assignment logic here
+    if(this != &assign){
+        for (int i = 0; i < 4; i++)
+        {
+            if (this->templates[i])
+                delete this->templates[i];
+            this->templates[i] = (assign.templates[i] ? assign.templates[i]->clone() : NULL);
+        }
     }
     return *this;
 }
 
-void    MateriaSource::learnMateria(AMateria*){
-    
+void    MateriaSource::learnMateria(AMateria* materia){
+    if (!materia)
+    return ;
+    for (int i = 0; i < 4; i++){
+        if (!templates[i]){
+            templates[i] = materia;
+            return ;
+        } 
+    }
 }
 
 AMateria* MateriaSource::createMateria(std::string const & type){
-
+    for (int i = 0; i < 4; i++){
+        if (templates[i] && templates[i]->getType() == type){
+            return templates[i]->clone();
+        }
+    }
+    return NULL;
 }
 
 
