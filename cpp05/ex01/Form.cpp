@@ -9,8 +9,15 @@ Form::~Form(){
 }
 
 Form::Form(const Form &assign) :
-    name(assign.name), isSigned(assign.isSigned), execGrade(assign.execGrade), signGrade(assign.signGrade){
+name(assign.name), isSigned(assign.isSigned),  execGrade(assign.execGrade), signGrade(assign.signGrade){
     std::cout << "Form Copy Constructor called !" << std::endl;
+}
+
+Form::Form(std::string name, int execGrade, int signGrade) : name(name), isSigned(false), execGrade(execGrade), signGrade(signGrade) {
+    if (this->execGrade > 150 || this->signGrade > 150)
+        throw Form::GradeTooLowException();
+    else if (this->execGrade < 1 || this->signGrade < 1)
+        throw Form::GradeTooHighException();
 }
 
 Form& Form::operator=(const Form &assign){
@@ -41,7 +48,7 @@ const char* Form::GradeTooHighException::what() const throw() {
 }
 
 const char* Form::GradeTooLowException::what() const throw() {
-    return "Grade : Too Low !!";
+    return "Grade : Too low !!";
 }
 
 std::ostream&    operator<<(std::ostream& os, const Form& obj){
@@ -51,9 +58,9 @@ std::ostream&    operator<<(std::ostream& os, const Form& obj){
 }
 
 void        Form::beSigned(Bureaucrat& obj){
-    if (obj.getGrade() < 1 || obj.getGrade() > 150){
+    if (obj.getGrade() > this->signGrade){
         std::cout << obj.getName() << " couldn't sign " << this->name << "because " ; 
-        obj.getGrade() < 1 ? throw Form::GradeTooHighException() : throw Form::GradeTooLowException();
+        throw Form::GradeTooLowException();
     }
     std::cout << obj.getName() << " signed " << this->name << std::endl; 
     isSigned = true;

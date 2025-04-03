@@ -18,6 +18,7 @@ class Form {
         ~Form();
         Form(const Form &assign);
         Form& operator=(const Form &assign);
+        Form(std::string name, int execGrade, int signGrade);
         std::string getName() const;
         bool        getIsSigned() const;
         int         getExecGrade() const;

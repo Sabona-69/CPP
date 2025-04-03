@@ -5,12 +5,15 @@
 #include "AForm.hpp"
 
 class PresidentialPardonForm : public AForm{
+    private:
+        std::string     target;
     public:
         PresidentialPardonForm();
         ~PresidentialPardonForm();
         PresidentialPardonForm(const PresidentialPardonForm &assign);
         PresidentialPardonForm& operator=(const PresidentialPardonForm &assign);
-        PresidentialPardonForm(const AForm &obj);
+        PresidentialPardonForm(const std::string &target);
+        void    execute(Bureaucrat const & executor);
 };
 
 #endif
