@@ -7,15 +7,18 @@
 
 
 class ShrubberyCreationForm : public AForm {
+    private:
+        std::string     target;
     public:
         ShrubberyCreationForm();
         ~ShrubberyCreationForm();
         ShrubberyCreationForm(const ShrubberyCreationForm &assign);
         ShrubberyCreationForm& operator=(const ShrubberyCreationForm &assign);
-        ShrubberyCreationForm(const AForm &obj);
+        ShrubberyCreationForm(const std::string &target);
         class OpenFileException : std::exception {
             const char* what() const throw();
         };
+        void    execute(Bureaucrat const & executor);
 };
 
 #endif

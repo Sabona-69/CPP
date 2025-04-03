@@ -1,36 +1,32 @@
 #include "ShrubberyCreationForm.hpp"
 
-ShrubberyCreationForm::ShrubberyCreationForm() {
+ShrubberyCreationForm::ShrubberyCreationForm() : target("Default target") {
     std::cout << "Default ShrubberyCreationForm Constructor called !" << std::endl;
 }
-
-ShrubberyCreationForm::ShrubberyCreationForm (const AForm &obj) {
-    if (obj.getSignGrade() == 145 && obj.getExecGrade() == 137)
-    {
-        std::ofstream file;
-        std::string fileName = obj.getName() + "_shrubbery";
-        file.open(fileName);
-        if (!file.is_open())
-            throw OpenFileException();
-        file << "hello";          
-    }
-}
-
-const char* ShrubberyCreationForm::OpenFileException:: what() const throw(){
-    return "Cannot open file !";
-} 
 
 ShrubberyCreationForm::~ShrubberyCreationForm(){
     std::cout << "Default ShrubberyCreationForm Destructor called !" << std::endl;
 }
 
-ShrubberyCreationForm::ShrubberyCreationForm(const ShrubberyCreationForm &assign) : AForm(assign) {
+ShrubberyCreationForm::ShrubberyCreationForm(const ShrubberyCreationForm &assign) : target(assign.target){
     std::cout << "ShrubberyCreationForm Copy Constructor called !" << std::endl;
 }
 
 ShrubberyCreationForm& ShrubberyCreationForm::operator=(const ShrubberyCreationForm &assign){
     if (this != &assign){
-        AForm::operator=(assign);
+        this->target = assign.target;
     }
     return *this;
+}
+
+void ShrubberyCreationForm::execute(Bureaucrat const & executor) {
+    if (this->getSignGrade() == 145 && this->getExecGrade() == 137)
+    {
+        std::ofstream file;
+        std::string fileName = target + "_shrubbery";
+        file.open(fileName);
+        if (!file.is_open())
+            throw OpenFileException();
+        file << "hello";          
+    }
 }
