@@ -52,14 +52,15 @@ const char* Form::GradeTooLowException::what() const throw() {
 }
 
 std::ostream&    operator<<(std::ostream& os, const Form& obj){
-    return os << obj.getName() << ", the sign is : " << obj.getIsSigned() 
-              << " , execution grade : " << obj.getExecGrade() << " and sign grade : "
-              << obj.getSignGrade() << std::endl;
+    std::string str =  obj.getIsSigned() ? "signed" : "not signed";
+    return os << obj.getName() << " [" << str 
+              << "], execution grade : " << obj.getExecGrade() << " and sign grade : "
+              << obj.getSignGrade();
 }
 
 void        Form::beSigned(Bureaucrat& obj){
     if (obj.getGrade() > this->signGrade){
-        std::cout << obj.getName() << " couldn't sign " << this->name << "because " ; 
+        std::cout << obj.getName() << " couldn't sign " << this->name << " because the grade is too low !\n"; 
         throw Form::GradeTooLowException();
     }
     std::cout << obj.getName() << " signed " << this->name << std::endl; 
