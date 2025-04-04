@@ -5,7 +5,7 @@ RM		= rm -f
 
 SRC		= Form.cpp Bureaucrat.cpp main.cpp \
 
-CFLAGS	= -Wall -Wextra -Werror -std=c++98 #-g3 # -fsanitize=address
+CFLAGS	= -Wall -Wextra -Werror -std=c++98 # -g3  -fsanitize=address
 
 OBJ		= $(SRC:.cpp=.o)
 

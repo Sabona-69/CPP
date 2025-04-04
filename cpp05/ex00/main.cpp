@@ -1,19 +1,27 @@
 #include "Bureaucrat.hpp"
 
-int main()
-{
-    try{
-        Bureaucrat test1("alo", 10);
-        std::cout << test1 << std::endl;
-        test1.setGrade(160);
-        // test1.setGrade(0);
-    }
-    
-    catch (Bureaucrat::GradeTooHighException &e) {
-        std::cout << "Exception called : " <<  e.what() << std::endl;
-    }
-    catch (Bureaucrat::GradeTooLowException &e) {
-        std::cout << "Exception called : " <<  e.what() << std::endl;
-    }
+
+int main() {
+    // Valid grades
+    Bureaucrat b1("Alice", 1);
+    Bureaucrat b2("Bob", 150);
+    std::cout << b1 << std::endl;
+    std::cout << b2 << std::endl;
+
+    // Invalid grades
+    try { Bureaucrat b3("Invalid", 0); }
+    catch (std::exception& e) { std::cerr << e.what() << std::endl; }
+
+    try { Bureaucrat b4("Invalid", 151); }
+    catch (std::exception& e) { std::cerr << e.what() << std::endl; }
+
+    // Increment/Decrement
+    try {
+        b1.decrementGrade();  // 1 → 2
+        b2.incrementGrade();  // 150 → 149
+        std::cout << b1 << std::endl;
+        std::cout << b2 << std::endl;
+    } catch (std::exception& e) { std::cerr << e.what() << std::endl; }
+
     return 0;
 }

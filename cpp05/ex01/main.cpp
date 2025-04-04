@@ -1,19 +1,25 @@
 #include "Bureaucrat.hpp"
+#include "Form.hpp"
 
-int main()
-{
-    try{
-        Bureaucrat test1("alo", 10);
-        std::cout << test1 << std::endl;
-        test1.setGrade(160);
-        // test1.setGrade(0);
+int main() {
+    Bureaucrat ceo("Elon", 1);
+    Bureaucrat intern("Bob", 150);
+
+    Form formA("Tax Form", 1, 1);
+    Form formB("Permit", 149, 149);
+
+    // CEO signs high-grade form
+    ceo.signForm(formA);
+    std::cout << formA << std::endl;
+
+    // Intern tries to sign
+    try {
+        intern.signForm(formB);  // Fails
     }
-    
-    catch (Bureaucrat::GradeTooHighException &e) {
-        std::cout << "Exception called : " <<  e.what() << std::endl;
+    catch (std::exception &e)
+    {
+        std::cout << "Exception caught : " << e.what() << std::endl;  
     }
-    catch (Bureaucrat::GradeTooLowException &e) {
-        std::cout << "Exception called : " <<  e.what() << std::endl;
-    }
+
     return 0;
 }

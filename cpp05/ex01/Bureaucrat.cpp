@@ -1,7 +1,6 @@
 #include "Bureaucrat.hpp"
 
-
-Bureaucrat::Bureaucrat(): name("Default") , grade(0){
+Bureaucrat::Bureaucrat(): name("Default") , grade(1){
     std::cout << "Default Bureaucrat Constructor called !" << std::endl;
 }
 
@@ -24,7 +23,7 @@ const char* Bureaucrat::GradeTooHighException::what() const throw() {
 }
 
 const char* Bureaucrat::GradeTooLowException::what() const throw() {
-    return "Grade : Too Low !!";
+    return "Grade : Too low !!";
 }
 
 Bureaucrat& Bureaucrat::operator=(const Bureaucrat &assign){
