@@ -19,10 +19,12 @@ all		: $(NAME)
 			$(CXX) $(CXXFLAGS) -c $<  -o $@
 $(NAME)	: $(OBJ)
 			$(CXX) $(CXXFLAGS) $(OBJ) -o $@
-clean	: 
+clean	:
 			$(RM) $(OBJ)
 
 fclean	: clean
 			$(RM) $(NAME) *_shrubbery
 
 re		: fclean all
+
+.PHONY: clean
