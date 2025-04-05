@@ -44,17 +44,14 @@ static int     parseInput(std::string input){
     int countF = 0;
     int countDots = 0;
     for (size_t i = 0; i < input.size(); i++){
-        if (!isdigit(input.at(i)))
-        {
-            if (!i && (input.at(i) == '+' || input.at(i) == '-'))
-               throw 42;
-            if (input.at(i) != '.' && input.at(i) != 'f' && 
-                input.at(i) != '+' && input.at(i) != '-')
+        if (!isdigit(input.at(i)) && 
+            input.at(i) != '.' && input.at(i) != 'f' && 
+            input.at(i) != '+' && input.at(i) != '-')
             {
                 throw 42;
             }
-        }
-        if (input.at(i) == '-' || input.at(i) == '+')
+        if (i && (input.at(i) == '+' || input.at(i) == '-'))
+            throw 42;
         if (input.at(i) == '.')
             countDots++;
         if (input.at(i) == 'f')
@@ -107,7 +104,7 @@ void ScalarConverter::convert(std::string input){
             break;
         }
         case FLOAT: {
-            f = std::atof(input.c_str());
+            f = static_cast<float>(std::atof(input.c_str()));
             c = static_cast<char>(f);
             i = static_cast<int>(f);
             d = static_cast<double>(f);
@@ -123,18 +120,16 @@ void ScalarConverter::convert(std::string input){
     }
         
     std::string printChar;
-    std::string printZero = "";
-    if ((int)c < 0 || (int)c > 255)
+    std::string printZero = d == static_cast<int>(d) ? ".0" : "";
+    if (c < 0)// || c > 255)
         printChar = "impossible";
     else {
         if (!isgraph(c))
             printChar = "Non displayable";
         else
-            printChar = std::string("'") + c + "'";
+        printChar = std::string("'") + c + "'";
     }
     std::cout << "char: " << printChar << std::endl;
-    if (d == static_cast<int>(d))
-        printZero = ".0";
     std::cout << "int: "  << i << std::endl;
     std::cout << "float: " << f << printZero << "f" << std::endl;
     std::cout << "double: " << d << printZero << std::endl;
