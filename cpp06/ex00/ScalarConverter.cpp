@@ -46,11 +46,15 @@ static int     parseInput(std::string input){
     for (size_t i = 0; i < input.size(); i++){
         if (!isdigit(input.at(i)))
         {
-             if (input.at(i) != '.' && input.at(i) != 'f' && 
+            if (!i && (input.at(i) == '+' || input.at(i) == '-'))
+               throw 42;
+            if (input.at(i) != '.' && input.at(i) != 'f' && 
                 input.at(i) != '+' && input.at(i) != '-')
-        {
-            throw 42;
+            {
+                throw 42;
+            }
         }
+        if (input.at(i) == '-' || input.at(i) == '+')
         if (input.at(i) == '.')
             countDots++;
         if (input.at(i) == 'f')
