@@ -1,30 +1,30 @@
-NAME	= 
+NAME	= scalar
 
 RM		= rm -f
 
-SRC		= (files ends with .cpp) \
-
+SRC		= ScalarConverter.cpp main.cpp \
+        
 CPPFLAGS	= -Wall -Wextra -Werror -std=c++98 # -g3  -fsanitize=address
 
 OBJ		= $(SRC:.cpp=.o)
 
 CPP		= c++
 
-INCLUDE = (files ends with .hpp) 
+INCLUDE = ScalarConverter.hpp
 
 all		: $(NAME)
-			
+            
 %.o		: %.cpp $(INCLUDE)
-			$(CPP) $(CPPFLAGS) -c $<  -o $@
+		$(CPP) $(CPPFLAGS) -c $<  -o $@
 
 $(NAME)	: $(OBJ)
-			$(CPP) $(CPPFLAGS) $(OBJ) -o $@
+		$(CPP) $(CPPFLAGS) $(OBJ) -o $@
 
 clean	: 
-			$(RM) $(OBJ)
+		$(RM) $(OBJ)
 
 fclean	: clean
-			$(RM) $(NAME) 
+		$(RM) $(NAME)
 
 re		: fclean all
 
