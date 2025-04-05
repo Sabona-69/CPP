@@ -2,7 +2,7 @@
 
 int main(int ac, char const *av[])
 {
-    if (ac != 2 || av[1] == '\0'){
+    if (ac != 2 || av[1][0] == '\0'){
         std::cout << "Invalid arguments !" << std::endl; 
         return 1;
     }
