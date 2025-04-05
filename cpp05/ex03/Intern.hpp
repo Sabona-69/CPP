@@ -14,6 +14,9 @@ class Intern{
         Intern(const Intern &assign);
         Intern& operator=(const Intern &assign);
         AForm    *makeForm(std::string form, std::string target);
-};
+        AForm    *presidential(std::string target);
+        AForm    *robotomy(std::string target);
+        AForm    *shrubbery(std::string target);
+    };
 
 #endif

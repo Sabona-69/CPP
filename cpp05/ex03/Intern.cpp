@@ -21,35 +21,32 @@ Intern& Intern::operator=(const Intern &assign){
     return *this;
 }
 
-AForm* Intern::makeForm(std::string form, std::string target){
-    
-    AForm   *ret;
-    int     input;
+AForm*    Intern::presidential(std::string target){
+    return new PresidentialPardonForm(target);
+}
 
+AForm*    Intern::robotomy(std::string target){
+    return new RobotomyRequestForm(target);
+}
+
+AForm*    Intern::shrubbery(std::string target){
+    return new ShrubberyCreationForm(target);
+}
+
+
+AForm* Intern::makeForm(std::string form, std::string target){
     std::string forms[3] = {
-        "robotomy request",
         "presidential pardon",
+        "robotomy request",
         "shrubbery creation"
     };
-    for (input = 0; input < 3; input++){
-        if (forms[input] == form)
-            break ;
-    }
-    switch (input)
-    {
-        case 0:
-            ret = new RobotomyRequestForm(target); 
-            break;
-        case 1:
-            ret = new PresidentialPardonForm(target); 
-            break;
-        case 2:
-            ret = new ShrubberyCreationForm(target); 
-            break;
-        default:
-            std::cout << "Invalid Form !!" << std::endl;
-            ret = NULL;
-            break;
+    AForm* (Intern::*func[])(std::string) = {&Intern::presidential, &Intern::robotomy, &Intern::shrubbery};    
+    for (int i = 0; i < 3; i++) {
+        if (forms[i] == form){
+            std::cout << "Intern Creates : " << form << std::endl;
+            return (this->*func[i])(target);
         }
-        return ret;
+    }
+    std::cout << form <<" : Invalid Form !!" << std::endl;
+    return NULL;
 }

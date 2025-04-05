@@ -26,3 +26,5 @@ fclean	: clean
 			$(RM) $(NAME) *_shrubbery
 
 re		: fclean all
+
+.PHONY: clean
