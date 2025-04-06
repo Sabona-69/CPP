@@ -1,8 +1,8 @@
-NAME	= serialization
+NAME	= dynamic
 
 RM		= rm -f
 
-SRC		= Serializer.cpp main.cpp \
+SRC		= Base.cpp A.cpp B.cpp C.cpp main.cpp \
         
 CPPFLAGS	= -Wall -Wextra -Werror -std=c++98 # -g3  -fsanitize=address
 
@@ -10,7 +10,7 @@ OBJ		= $(SRC:.cpp=.o)
 
 CPP		= c++
 
-INCLUDE = Serializer.hpp
+INCLUDE = Base.hpp A.hpp B.hpp C.hpp
 
 all		: $(NAME)
             
