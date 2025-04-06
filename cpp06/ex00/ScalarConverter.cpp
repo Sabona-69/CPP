@@ -21,24 +21,33 @@ ScalarConverter& ScalarConverter::operator=(const ScalarConverter &assign){
     return *this;
 }
 
-static void printInf(const std::string& str) {
-    bool neg = (str[0] == '-');
-    bool isNan = (str.find("nan") != std::string::npos);
-    std::cout << "char: impossible" << std::endl;
-    std::cout << "int: impossible" << std::endl;
-    if (isNan)
+#define CHAR    0
+#define INT     1
+#define DOUBLE  2
+#define FLOAT   3
+
+static bool checkInf(const std::string& input) {
+    if (input == "nan" || input == "nanf" ||
+        input == "-inff" || input == "+inff" ||
+        input == "-inf" || input == "+inf")
+    {
+        bool neg = (input[0] == '-');
+        bool isNan = (input.find("nan") != std::string::npos);
+        std::cout << "char: impossible" << std::endl;
+        std::cout << "int: impossible" << std::endl;
+        if (isNan)
         std::cout << "float: nanf\n";
-    else
+        else
         std::cout << "float: " << (neg ? "-inff\n" : "+inff\n");
-    if (isNan)
+        if (isNan)
         std::cout << "double: nan\n";
-    else
+        else
         std::cout << "double: " << (neg ? "-inf\n" : "+inf\n");
+        return true;
+    }
+    return false;
 }
 
-#define INT 1
-#define DOUBLE 2
-#define FLOAT 3
 
 static int     parseInput(std::string input){
     int countF = 0;
@@ -63,6 +72,9 @@ static int     parseInput(std::string input){
         throw 42;
     if (countDots && (input.at(input.length() - 1) == '.' || input.at(0) == '.'))
         throw 42;
+    float checkChar = atof(input.c_str());
+    if (checkChar == static_cast<int>(checkChar) && checkChar >= 0 && checkChar <= 255)
+        return CHAR;
     if (countF)
         return FLOAT;
     if (countDots)
@@ -70,18 +82,29 @@ static int     parseInput(std::string input){
     return INT;
 }
 
+static void printAll(char c, int i, float f, double d){
+    std::string printChar;
+    std::string printZero = d == static_cast<int>(d) ? ".0" : "";
+    if (i < 0 || i > 255)
+        printChar = "impossible";
+    else {
+        if (!isgraph(c))
+            printChar = "Non displayable";
+        else
+        printChar = std::string("'") + (char)c + "'";
+    }
+    std::cout << "char: " << printChar << std::endl;
+    std::cout << "int: "  << i << std::endl;
+    std::cout << "float: " << f << printZero << "f" << std::endl;
+    std::cout << "double: " << d << printZero << std::endl;
+}
+
 
 
 void ScalarConverter::convert(std::string input){
     
-    if (input == "nan" || input == "nanf" ||
-        input == "-inff" || input == "+inff" ||
-        input == "-inf" || input == "+inf")
-        {
-            printInf(input);
-            return ;
-        }
-        
+    if (checkInf(input))
+        return ;
     int flag;
     try{
         flag = parseInput(input);
@@ -92,10 +115,17 @@ void ScalarConverter::convert(std::string input){
         return ;
     }
     int i;
-    char c;
+    unsigned char c;
     float f;
     double d;
     switch (flag) {
+        case CHAR: {
+            c = std::atoi(input.c_str());
+            i = static_cast<int>(c);
+            f = static_cast<float>(c);
+            d = static_cast<double>(c);
+            break;
+        }
         case INT: {
             i = std::atoi(input.c_str());
             c = static_cast<char>(i);
@@ -118,19 +148,5 @@ void ScalarConverter::convert(std::string input){
             break;
         }
     }
-        
-    std::string printChar;
-    std::string printZero = d == static_cast<int>(d) ? ".0" : "";
-    if (c < 0)// || c > 255)
-        printChar = "impossible";
-    else {
-        if (!isgraph(c))
-            printChar = "Non displayable";
-        else
-        printChar = std::string("'") + c + "'";
-    }
-    std::cout << "char: " << printChar << std::endl;
-    std::cout << "int: "  << i << std::endl;
-    std::cout << "float: " << f << printZero << "f" << std::endl;
-    std::cout << "double: " << d << printZero << std::endl;
+    printAll(c, i, f, d);
 }
