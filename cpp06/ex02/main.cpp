@@ -11,4 +11,5 @@ int main() {
     basePtr = baseObj.generate();
     baseObj.identify(basePtr);
     baseObj.identify(*basePtr);
+    delete basePtr;
 }

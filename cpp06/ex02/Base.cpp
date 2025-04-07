@@ -7,7 +7,6 @@ Base::~Base(){
     std::cout << "Default Base Destructor called !" << std::endl;
 }
 
-
 Base * Base::generate(void){
     std::srand(time(0));
     int random = std::rand() % 3;
