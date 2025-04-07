@@ -3,15 +3,6 @@
 
 #include <iostream>
 #include <cstdlib>
-#include <exception>
-#include "A.hpp"
-#include "B.hpp"
-#include "C.hpp"
-
-class A;
-class B;
-class C;
-
 
 class Base {
     public:
