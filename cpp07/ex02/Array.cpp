@@ -19,3 +19,7 @@ Array& Array::operator=(const Array &assign){
     }
     return *this;
 }
+
+Array::Array(N n){
+    this.    
+}
