@@ -1,27 +1,69 @@
 #include "Array.hpp"
 
-
 int main() {
-    // Create array of 5 integers
-    Array<int> int_arr(5);
-    
-    // Initialize values
-    for(size_t i = 0; i < int_arr.size(); ++i) {
-        int_arr[i] = i * 10;
+    // Test 1: Default constructor (empty array)
+    Array<int> empty;
+    try {
+        std::cout << "Empty array size: " << empty.size() << std::endl;
+        empty[0] = 42; // Should throw
+    } catch (const std::exception& e) {
+        std::cout << "Exceptiont Caught : " << e.what() << std::endl;
     }
 
-    // Test copy constructor
-    Array<int> int_arr2 = int_arr;
-    int_arr2[0] = 100;
+    // Test 2: Constructor with size and value initialization
+    Array<int> arr(3);
+    arr[0] = 1;
+    arr[1] = 2;
+    arr[2] = 3;
+    std::cout << "Original array: \n" << arr << std::endl;
+    
+    // Test 3: Shallow copy via copy constructor
+    Array<int> arrCopy(arr);
+    arrCopy[0] = 100;
+    arrCopy[1] = 200;
+    arrCopy[2] = 300;
+    std::cout << "After copy modification : \n" << arrCopy << std::endl;
+    std::cout << "Original array: \n" << arr << std::endl;
+    
+    
+    // Test 4: Assignment operator
+    Array<int> arrAssign;
+    arrAssign = arr;
+    arrAssign[0] = 1000;
+    arrAssign[1] = 2000;
+    arrAssign[2] = 3000;
+    std::cout << "After assignment modification : \n" << arrAssign << std::endl;
+    std::cout << "Original array: \n" << arr << std::endl;
 
-    // Test assignment operator
-    Array<int> int_arr3(3);
-    int_arr3 = int_arr;
+    // Test 5: Bounds checking
+    try {
+        std::cout << "Accessing invalid index: " << arr[3] << std::endl;
+    } catch (const std::exception& e) {
+        std::cout << "Exceptiont Caught : " << e.what() << std::endl;
+    }
+    
+    // Test 6: Test another type
+    Array<std::string> str(3);
+    str[0] = "abc";
+    str[1] = "def";
+    str[2] = "gih";
+    std::cout << str << std::endl;
+    
+    // Test 7: Test empty array
+    try
+    {
+        Array<std::string> str;
+        str[0] = "abc";
+        str[1] = "def";
+        str[2] = "gih";
+        std::cout << str;
+    }
+    catch(const std::exception& e)
+    {
+        std::cout << "Exceptiont Caught : " << e.what() << std::endl;
+    }
+     
 
-    // Output results
-    std::cout << "Original[0]: " << int_arr[0]   // 0
-              << " Copy[0]: " << int_arr2[0]     // 100
-              << " Assign[0]: " << int_arr3[0];  // 0
 
     return 0;
 }
