@@ -12,7 +12,7 @@ class Array {
         T   *data;
         unsigned int  d_size;
     public:
-        explicit Array() : data(NULL) , d_size(0) {}
+        Array() : data(NULL) , d_size(0) {}
         Array(unsigned int n) : data(n ? new T[n] : NULL), d_size(n) {}
         ~Array(){ delete[] this->data;}
         Array(const Array &assign) : data(assign.data ? new T[assign.d_size] : NULL), d_size(assign.d_size) {
@@ -31,15 +31,23 @@ class Array {
             }
             return *this;
         }
+
         class ThrowInvalidAccess : public std::exception {
             const char *what() const throw() {return "Empty Array !";};
         };
+
         class ThrowInvalidIndex : public std::exception {
             const char *what() const throw() {return "Invalid Index !";};
         };
+
         T& operator[](unsigned int n){
             if (!data) throw ThrowInvalidAccess();
             if (n >= this->d_size) throw ThrowInvalidIndex();
+            return data[n];
+        }
+
+        const T& operator[](unsigned int n) const {
+            if (n >= d_size) throw ThrowInvalidIndex();
             return data[n];
         }
 

@@ -49,7 +49,7 @@ int main() {
     str[2] = "gih";
     std::cout << str << std::endl;
     
-    // Test 7: Test empty array
+    // Test 7: Test default constructor with strings
     try
     {
         Array<std::string> str;
@@ -62,8 +62,19 @@ int main() {
     {
         std::cout << "Exceptiont Caught : " << e.what() << std::endl;
     }
-     
-
-
+    
+    // Test 8: Test const operator[]
+    try
+    {
+        const Array<std::string> constStr(3);
+        // constStr[0] = "abc";
+        std::cout << "{" <<constStr[0] << "}" << std::endl;   
+        
+    }
+    catch(const std::exception& e)
+    {
+        std::cout << "Exceptiont Caught : " << e.what() << std::endl;
+    }    
+    
     return 0;
 }
