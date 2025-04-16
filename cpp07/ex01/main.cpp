@@ -8,7 +8,11 @@ void increment(T& element) {
 
 template <typename T>
 void printElement(const T& element) {
-    std::cout << element << " ";
+        std::cout << element << " ";
+}
+
+void putcharr(char &c){
+    std::cout << c << std::endl;
 }
 
 int main() {
@@ -31,6 +35,8 @@ int main() {
     std::cout << "String array: ";
     iter(strArr, strLength, printElement<std::string>);
     std::cout << "\n" << std::string(29, '=') << "\n";
+
+    iter(&strArr[0][0], strArr[0].length(), putcharr);
 
     return 0;
 }
