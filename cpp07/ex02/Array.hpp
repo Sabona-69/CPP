@@ -51,12 +51,12 @@ Array<T>::Array(const Array &assign) : data(new T[assign.d_size]), d_size(assign
 
 template<typename T>
 Array<T>& Array<T>::operator=(const Array &assign){
-    if (this != &assign && assign.data){
+    if (this != &assign){
         delete [] this->data;
         this->data = new T[assign.d_size];
         this->d_size = assign.d_size;
         for (size_t i = 0; i < d_size; i++)
-        data[i] = assign.data[i];
+            data[i] = assign.data[i];
     }
     return *this;
 }
@@ -69,7 +69,7 @@ const char* Array<T>::ThrowInvalidIndex::what() const throw() { return "Invalid 
 
 template<typename T>
 T& Array<T>::operator[](unsigned int n) {
-    if (!data) throw ThrowInvalidAccess();
+    if (!this->d_size) throw ThrowInvalidAccess();
     if (n >= this->d_size) throw ThrowInvalidIndex();
     return data[n];
 }

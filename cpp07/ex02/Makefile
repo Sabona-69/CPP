@@ -8,7 +8,7 @@ CPPFLAGS	= -Wall -Wextra -Werror -std=c++98  #-g3  -fsanitize=address
 
 OBJ		= $(SRC:.cpp=.o)
 
-CPP		= g++
+CPP		= c++
 
 INCLUDE = Array.hpp
 

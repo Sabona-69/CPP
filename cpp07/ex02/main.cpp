@@ -5,7 +5,7 @@ int main() {
     Array<int> empty;
     try {
         std::cout << "Empty array size: " << empty.size() << std::endl;
-        empty[0] = 42; // Should throw
+        empty[0] = 42;
     } catch (const std::exception& e) {
         std::cout << "Exceptiont Caught : " << e.what() << std::endl;
     }
@@ -24,7 +24,6 @@ int main() {
     arrCopy[2] = 300;
     std::cout << "After copy modification : \n" << arrCopy << std::endl;
     std::cout << "Original array: \n" << arr << std::endl;
-    
     
     // Test 4: Assignment operator
     Array<int> arrAssign;
@@ -54,8 +53,6 @@ int main() {
     {
         Array<std::string> str;
         str[0] = "abc";
-        str[1] = "def";
-        str[2] = "gih";
         std::cout << str;
     }
     catch(const std::exception& e)
@@ -67,8 +64,11 @@ int main() {
     try
     {
         const Array<std::string> constStr(3);
-        // constStr[0] = "abc";
-        std::cout << "{" <<constStr[0] << "}" << std::endl;   
+
+        // constStr[0] = "123";
+        // Array<std::string>& nonConstArray = const_cast<Array<std::string>&>(constStr);
+        // nonConstArray[0] = "123";
+        std::cout << "{" << constStr[0] << "}" << std::endl;   
         
     }
     catch(const std::exception& e)

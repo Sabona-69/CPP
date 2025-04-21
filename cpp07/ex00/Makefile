@@ -4,7 +4,7 @@ RM		= rm -f
 
 SRC		= main.cpp \
         
-CPPFLAGS	= -Wall -Wextra -Werror -std=c++98 # -g3  -fsanitize=address
+CPPFLAGS	= -Wall -Wextra -Werror -std=c++98 #-g  -fsanitize=address
 
 OBJ		= $(SRC:.cpp=.o)
 
