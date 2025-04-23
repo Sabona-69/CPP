@@ -6,10 +6,10 @@
 
 template<typename T>
 
-void easyfind(const T& t, int i){
-    T search = find(t, (sizeof(t) / sizeof(int)), i);
-    std::cerr << "cannot find element !\n" ;
-    
+void    easyfind(const T& t, int i)
+{
+    T::iterator  search = find(t, (sizeof(t) / sizeof(int)), i);
+    std::cerr << "cannot find element !\n";
 }
 
 #endif
