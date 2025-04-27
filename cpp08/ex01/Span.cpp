@@ -6,9 +6,9 @@ Span::Span(){
 Span::~Span(){
 }
 
-Span::Span(const Span &assign) : tab(assign.tab), max(assign.max) {
-    
-    // for (int i = 0; i < assign.tab.size(); i++)
+Span::Span(const Span &assign) :  max(assign.max) {
+    tab = assign.tab;
+    // for (unsigned long i = 0; i < assign.tab.size(); i++)
     //     tab.push_back(assign.tab[i]);
 }
 
@@ -30,10 +30,26 @@ void    Span::addNumber(unsigned int n){
         throw std::runtime_error("The number you tried to add already exist !");
     tab.push_back(n);
 }
-void    shortestSpan(){
-    // std::vector<int>::iterator it = 
+
+int    Span::shortestSpan(){
+    if (tab.size() < 2)  
+        throw std::runtime_error("Not enough elements");  
+    std::vector<int> sorted = tab;  
+    std::sort(sorted.begin(), sorted.end());  
+    int minDiff = sorted[1] - sorted[0];  
+    for (size_t i = 2; i < sorted.size(); i++) {  
+        int diff = sorted[i] - sorted[i - 1];  
+        if (diff < minDiff)  
+            minDiff = diff;  
+    }  
+    return minDiff;
 }
 
-void    longestSpan(){
-    
+int    Span::longestSpan(){
+    if (tab.size() < 2)  
+        throw std::runtime_error("Not enough elements");
+    std::vector<int> sorted = tab;  
+    std::sort(sorted.begin(), sorted.end());  
+    int maxDiff = sorted[sorted.size() - 1] - sorted[0];  
+    return maxDiff;
 }

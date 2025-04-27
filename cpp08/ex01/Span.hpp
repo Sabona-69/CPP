@@ -11,14 +11,15 @@ class Span {
         std::vector<int> tab;
         unsigned int max;
         Span();
+        public:
         Span(const Span &assign);
-    public:
         ~Span();
         Span(unsigned int n);
         Span& operator=(const Span &assign);
         void    addNumber(unsigned int n);
-        void shortestSpan();
-        void longestSpan();
+        std::vector<int>& getTab() {return this->tab;}
+        int shortestSpan();
+        int longestSpan();
     };
     
 #endif
