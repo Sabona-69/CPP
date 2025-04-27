@@ -4,12 +4,15 @@
 #include <algorithm>
 #include <iostream>
 
-template<typename T>
 
-void    easyfind(const T& t, int i)
+template<typename T>
+typename T::iterator    easyfind(T& t, int i)
 {
-    T::iterator  search = find(t, (sizeof(t) / sizeof(int)), i);
-    std::cerr << "cannot find element !\n";
+    typename T::iterator it = std::find(t.begin(), t.end(), i);
+    if (it == t.end()) {
+        throw std::runtime_error("Value not founded!");
+    }
+    return it;
 }
 
 #endif
