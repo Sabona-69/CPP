@@ -4,44 +4,34 @@
 #include <iostream>
 #include <algorithm>
 #include <stack>
-#include <vector>
+#include <deque>
+
+// #include <containers>
+
+template<typename T, typename Container = std::deque<T>>
+class MutantStack : public std::stack<T, Container> {
+	private: 
+		 std::stack<T> arr; 
+typedef	
+	public:
+		typedef typename std::stack<T>::container_type::iterator iterator;
+		MutantStack();
+		~MutantStack();
+		MutantStack(const MutantStack &assign);
+		MutantStack& operator=(const MutantStack &assign);
+		// iterator begin();
+		std::stack<T>::iterator 
+		// iterator  end();
+		// void 
 
 
-template <typename T>
-class MutantStack : public std::stack<T> {
-    // private: 
-    //     std::stack<T> arr; 
-    public:
-        typedef typename std::stack<T>::container_type::iterator iterator;
-        MutantStack();
-        ~MutantStack();
-        MutantStack(const MutantStack &assign);
-        MutantStack& operator=(const MutantStack &assign);
-        iterator begin();
-        iterator  end();
-        // void 
-        
-    };
-template <typename T>
-std::stack<T>::MutantStack::MutantStack(){
+};
+// template <typename T>
+// iterator MutantStack::begin(){
 
-}
-    
-MutantStack::~MutantStack(){
+// }
+// iterator MutantStack::end(){
 
-}
-MutantStack::MutantStack(const MutantStack &assign){
-
-}
-MutantStack::MutantStack& operator=(const MutantStack &assign){
-
-}
-template <typename T>
-iterator MutantStack::begin(){
-
-}
-iterator MutantStack::end(){
-
-}
+// }
 
 #endif
