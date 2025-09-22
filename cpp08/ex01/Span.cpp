@@ -7,14 +7,14 @@ Span::~Span(){
 }
 
 Span::Span(const Span &assign) :  max(assign.max) {
-	tab = assign.tab;
-	// for (unsigned long i = 0; i < assign.tab.size(); i++)
-	//	 tab.push_back(assign.tab[i]);
+	vecNum = assign.vecNum;
+	// for (unsigned long i = 0; i < assign.vecNum.size(); i++)
+	//	 vecNum.push_back(assign.vecNum[i]);
 }
 
 Span& Span::operator=(const Span &assign){
 	if (this != &assign){
-		tab = assign.tab;
+		vecNum = assign.vecNum;
 		max = assign.max;
 	}
 	return *this;
@@ -23,18 +23,32 @@ Span& Span::operator=(const Span &assign){
 Span::Span(unsigned int n) : max(n) {
 
 }
-void	Span::addNumber(int n){
-	if (this->tab.size() >= max)
+
+
+const std::vector<int>&	Span::getVecNum() const { return this->vecNum; };
+unsigned int	Span::getMax() const { return this->max; };
+
+void 	Span::addNumber(std::vector<int>::iterator begin, std::vector<int>::iterator end) {
+	
+	if (n > max)
 		throw std::runtime_error("There is no space left !");
-	if (std::find(tab.begin(), tab.end(), n) != tab.end())
+
+
+
+}
+
+void	Span::addNumber(int n){
+	if (this->vecNum.size() >= max)
+		throw std::runtime_error("There is no space left !");
+	if (std::find(vecNum.begin(), vecNum.end(), n) != vecNum.end())
 		throw std::runtime_error("The number you tried to add already exist !");
-	tab.push_back(n);
+	vecNum.push_back(n);
 }
 
 unsigned int	Span::shortestSpan(){
-	if (tab.size() < 2)  
+	if (vecNum.size() < 2)  
 		throw std::runtime_error("Not enough elements");  
-	std::vector<int> sorted = tab;  
+	std::vector<int> sorted = vecNum;  
 	std::sort(sorted.begin(), sorted.end());  
 	unsigned int minDiff = sorted[1] - sorted[0];
 	for (size_t i = 2; i < sorted.size(); i++) {  
@@ -46,10 +60,7 @@ unsigned int	Span::shortestSpan(){
 }
 
 unsigned int	Span::longestSpan(){
-	if (tab.size() < 2)  
+	if (vecNum.size() < 2)  
 		throw std::runtime_error("Not enough elements");
-	std::vector<int> sorted = tab;  
-	std::sort(sorted.begin(), sorted.end());  
-	int maxDiff = sorted[sorted.size() - 1] - sorted[0];  
-	return maxDiff;
+	return (unsigned int)(*std::max_element(vecNum.begin(), vecNum.end()) - *std::min_element(vecNum.begin(), vecNum.end()));
 }
