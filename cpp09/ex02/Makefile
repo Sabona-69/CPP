@@ -1,16 +1,16 @@
-NAME	= btc
+NAME	= PmergeMe
 
 RM		= rm -f
 
-SRC		= BitcoinExchange.cpp main.cpp \
+SRC		= PmergeMe.cpp main.cpp \
         
-CPPFLAGS	= #-Wall -Wextra -Werror -std=c++98 # -g3  -fsanitize=address
+CPPFLAGS	= -Wall -Wextra -Werror -std=c++98 # -g3  -fsanitize=address
 
 OBJ		= $(SRC:.cpp=.o)
 
 CPP		= c++
 
-INCLUDE = BitcoinExchange.hpp
+INCLUDE = PmergeMe.hpp
 
 all		: $(NAME)
             

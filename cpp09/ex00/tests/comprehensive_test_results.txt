@@ -1,0 +1,83 @@
+Comprehensive Test Results for Bitcoin Exchange Calculator
+
+I. NORMAL FUNCTIONALITY TESTS
+1. Valid inputs: ✓ Work correctly
+   - Input: "2010-08-26 | 2", "2015-06-19 | 5", "2012-01-17 | 3", "2020-01-14 | 10"
+   - Output: Correct calculation based on historical exchange rates
+
+II. ERROR HANDLING TESTS
+1. Negative values: ✓ Handled correctly
+   - Input: "2009-01-02 | -5" 
+   - Output: "Error: not a positive number."
+
+2. Values > 1000: ✓ Handled correctly
+   - Input: "2015-06-19 | 1500"
+   - Output: "Error: too large a number."
+
+3. Invalid date formats: ✓ Handled correctly
+   - Input: "invalid-date | 5"
+   - Output: "Error: bad input => invalid-date | 5"
+
+4. Invalid date values: ✓ Handled correctly
+   - Input: "2021-02-29 | 5" (2021 is not a leap year)
+   - Output: "Error: bad input => 2021-02-29 | 5"
+
+III. EDGE CASE TESTS
+1. Extremely large numbers: ✓ Handled correctly
+   - Input: "2020-01-14 | 1.7976931348623157e+308"
+   - Output: "Error: bad input => 2020-01-14 | 1.7976931348623157e+308"
+
+2. Very small numbers: ✓ Handled correctly
+   - Input: "2015-06-19 | 0.0000000000000000000000000001"
+   - Output: "2015-06-19 => 1e-28 = 2.4826e-26"
+
+3. High precision values: ✓ Handled correctly
+   - Input: "2010-08-26 | 999.9999999999999999999999999999"
+   - Output: Valid calculation with high precision
+
+4. Invalid years: ✓ Handled correctly
+   - Input: "0000-01-01 | 5"
+   - Output: "Error: bad input => 0000-01-01 | 5"
+
+5. Future dates: ✓ Handled correctly
+   - Input: "9999-12-31 | 5"
+   - Output: "9999-12-31 => 5 = 235580" (uses the closest previous rate)
+
+IV. FILE OPERATION TESTS
+1. Non-existent input file: ✓ Handled correctly
+   - Command: "./btc nonexistent_file.txt"
+   - Output: "Error: could not open file."
+
+2. Missing data.csv file: ✓ Handled correctly
+   - When data.csv is missing
+   - Output: "Error: could not open file."
+
+3. Empty input file: ✓ Handled correctly
+   - Input: Completely empty file
+   - Output: (empty) - no errors, exits normally
+
+4. Invalid database format: 
+   - Not tested (would require modifying data.csv format)
+   - Based on code: Would throw "Error: Invalid database format !"
+
+V. SPECIAL CASE TESTS
+1. Dates not in database:
+   - Input: "2008-12-31 | 5" (before any dates in database)
+   - Output: (empty) - no result, no error message (potential issue)
+
+2. Date range handling: ✓ Works correctly
+   - Uses closest previous date when exact date not found
+   - Handles dates after the last database entry
+
+VI. SECURITY/PERFORMANCE TESTS
+1. The program handles very large numeric inputs appropriately
+2. Invalid dates are properly rejected
+3. File access errors are properly handled
+4. No crashes observed with invalid inputs
+
+VII. OBSERVATIONS
+1. The program handles most edge cases appropriately
+2. Error messages are clear and helpful
+3. The date lookup logic correctly finds the closest previous date when exact matches aren't found
+4. One potential issue: When a date is before any date in the database, no output is generated without a clear indication of what happened
+5. The program is robust against various types of invalid inputs
