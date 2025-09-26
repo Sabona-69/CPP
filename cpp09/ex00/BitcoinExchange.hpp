@@ -3,15 +3,19 @@
 
 #include <fstream>
 #include <iostream>
+#include <sstream>
 #include <map>
+
+#define CSV_DELIMETER 1
+#define INPUT_DELIMETER 2
 
 typedef std::map<std::string, float> dataBaseMap;
 
 class BitcoinExchange {
 	private:
-		dataBaseMap		dataBase;
 		std::ifstream 	file;
 		std::ifstream 	dataBaseFile;
+		dataBaseMap		dataBase;
     public:
         BitcoinExchange();
         ~BitcoinExchange();
@@ -20,8 +24,9 @@ class BitcoinExchange {
 
 		void	validateProgramInputs(int ac, char **av);
 		void	fillDataBase();
-		void	validateLine(const std::string& line);
+		bool	validateLine(const std::string& line);
 		void	parseFile();
+		void	calculatedAndPrintValue(const std::string& line);
 };
 
 

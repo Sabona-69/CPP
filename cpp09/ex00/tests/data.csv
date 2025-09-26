@@ -1,0 +1,12 @@
+1. Bitcoin Exchange Calculator (ex00)
+   - Critical Bug: The calculatedAndPrintValue function attempts to access an invalid iterator when the exact date is not found in the database
+   - Logic Error: The algorithm for finding closest dates was inverted
+   - Minor Bug: Inconsistent error value checking (-1 vs -42)
+
+  2. RPN Calculator (ex01)
+   - Critical Bug: The result of operations is never pushed back to the stack due to incorrect placement of code after the switch statement
+   - Functional Issue: The calculator only processes individual characters, not multi-digit numbers
+
+  Testing Results
+   - The Bitcoin Exchange calculator works for basic cases but has issues with edge cases and closest-date lookups
+   - The RPN calculator fails for all test cases due to the critical bug
