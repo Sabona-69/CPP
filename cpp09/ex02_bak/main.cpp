@@ -7,6 +7,7 @@ int main(int argc, char **argv){
 	{
 		if (argc < 2) throw std::runtime_error("Error: Not enough arguments");
 		
+		// Create container copies manually to test the algorithm
 		std::vector<int> vector_container;
 		std::deque<int> deque_container;
 		
