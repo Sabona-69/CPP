@@ -59,21 +59,20 @@ void PmergeMe::printContainer(const std::string& msg) {
 }
 
 void	PmergeMe::sortVector() {
-	std::vector<int> small;
-	std::vector<int> large;
+	std::vector<std::pair<int, int>> pairs;
 
 	if (_vector.size() <= 1) return ;
+
 	for (size_t i = 0; i < _vector.size(); i += 2) {
 		if (i + 1 < _vector.size()) {
 			if (_vector[i] < _vector[i + 1]) {
-				small.push_back(_vector[i]);
-				large.push_back(_vector[i + 1]);
+						
+				
 			} else {
-				small.push_back(_vector[i + 1]);
-				large.push_back(_vector[i]);
+				
 			}
 		} else {
-			small.push_back(_vector[i]);
+			
 		}
 	}
 	// for (size_t i = 0; i < large.size(); i++) 
