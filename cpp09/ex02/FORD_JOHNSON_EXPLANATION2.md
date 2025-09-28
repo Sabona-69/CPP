@@ -2,7 +2,9 @@
 
 ## Let's Start With a Game!
 
-Imagine you have a line of different colored ice cream pints, and you want to arrange them from the smallest tub to the biggest tub. But there's a catch - you can **only compare TWO ice cream pints at a time** by lifting them up to see which one feels heavier. That's it! That's exactly what a computer does when it sorts - it can only compare two things at a time.
+Imagine you have a line of different colored ice cream pints, and you want to arrange them from the smallest tub to the biggest tub. But there's a catch - 
+you can **only compare TWO ice cream pints at a time** by lifting them up to see which one feels heavier. That's it! That's exactly what a computer does when it sorts 
+it can only compare two things at a time.
 
 ## The Problem We're Solving
 
