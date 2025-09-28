@@ -35,18 +35,6 @@ std::deque<int> PmergeMe::getDeque() const {
 	return _deque;
 }
 
-template <typename Container>
-void printContainer(const Container &container, const std::string& msg) {
-	typename Container::const_iterator it = container.begin();
-	typename Container::const_iterator ite = container.end();
-	std::cout << msg;
-	while (it != ite) {
-		std::cout << *it << " ";
-		it++;
-	}
-	std::cout << std::endl;
-}
-
 void PmergeMe::fillContainers(char **argv) {
 	for (int i = 1; argv[i] != NULL; i++) {
 		if (isAllDegit(argv[i]) == false)
@@ -60,4 +48,42 @@ void PmergeMe::fillContainers(char **argv) {
 	}
 }
 
+void PmergeMe::printContainer(const std::string& msg) {
+	std::cout << msg;
+	for (size_t i = 0; i < _vector.size(); i++) {
+		std::cout << _vector[i];
+		if (i != _vector.size() - 1)
+			std::cout << " ";
+	}
+	std::cout << std::endl;
+}
 
+void	PmergeMe::sortVector() {
+	std::vector<int> small;
+	std::vector<int> large;
+
+	if (_vector.size() <= 1) return ;
+	for (size_t i = 0; i < _vector.size(); i += 2) {
+		if (i + 1 < _vector.size()) {
+			if (_vector[i] < _vector[i + 1]) {
+				small.push_back(_vector[i]);
+				large.push_back(_vector[i + 1]);
+			} else {
+				small.push_back(_vector[i + 1]);
+				large.push_back(_vector[i]);
+			}
+		} else {
+			small.push_back(_vector[i]);
+		}
+	}
+	// for (size_t i = 0; i < large.size(); i++) 
+	// 	std::cout << large[i] << " ";
+	// for (size_t i = 0; i < small.size(); i++)
+	// 	std::cout << small[i] << " ";
+
+
+}
+
+void	PmergeMe::sortDeque() {
+
+}

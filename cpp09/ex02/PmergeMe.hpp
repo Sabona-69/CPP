@@ -21,17 +21,18 @@ class PmergeMe {
         ~PmergeMe();
         PmergeMe(const PmergeMe &assign);
         PmergeMe& operator=(const PmergeMe &assign);
+
+		void printContainer(const std::string& msg);
+		
 		std::vector<int> getVector() const;
 		std::deque<int> getDeque() const;
-
 		void fillContainers(char **argv);
-	
+		void sortDeque();
+		void sortVector();
+
 };
 
 
 bool isAllDegit(char *str);
-
-template <typename Container>
-void printContainer(const Container &container);
 
 #endif
