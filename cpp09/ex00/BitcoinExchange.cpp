@@ -7,8 +7,9 @@ BitcoinExchange::~BitcoinExchange() {
 	if (dataBaseFile.is_open())
 		dataBaseFile.close();
 }
-BitcoinExchange::BitcoinExchange(const BitcoinExchange &assign) { }
-BitcoinExchange& BitcoinExchange::operator=(const BitcoinExchange &assign){ return *this; }
+
+BitcoinExchange::BitcoinExchange(const BitcoinExchange &assign) { (void)assign; }
+BitcoinExchange& BitcoinExchange::operator=(const BitcoinExchange &assign){ (void)assign; return *this; }
 
 void	BitcoinExchange::validateProgramInputs(int ac, char **av) {
 	if (ac != 2)  throw std::runtime_error("Error: could not open file.");
@@ -67,8 +68,9 @@ bool	validateDate(const std::string& date) {
 }
 
 bool	validateFormat(const std::string& line, int type) {
-	//  YYYY-MM-DD sp | sp value ==> at least 14 character
+	//  YYYY-MM-DD sp | sp value ==> at least 14 character for input file
 	if (type == INPUT_DELIMETER && line.size() < 14) return false;
+	//  YYYY-MM-DD sp | sp value ==> at least 12 character for csv file
 	if (type == CSV_DELIMETER && line.size() < 12) return false;
 	// validate date parts
 	if (line.at(4) != '-' && line.at(7) != '-') return false;
@@ -98,51 +100,57 @@ float	extractValue(const std::string& valueStr) {
 bool	BitcoinExchange::validateLine(const std::string& line){
 	// validate format
 	if (validateFormat(line, INPUT_DELIMETER) == false) {
-		std::cout << "Error: bad input => " << line << std::endl;
+		std::cerr << "Error: bad input => " << line << std::endl;
 		return false;
 	}
 	if (validateDate(line.substr(0, 10)) == false) {
-		std::cout << "Error: bad input => " << line << std::endl;
+		std::cerr << "Error: bad input => " << line << std::endl;
 		return false;
 	}
 	float value = extractValue(line.substr(13));
 	if (value < 0 || value > 1000) {
 		if (value == -42)
-			std::cout << "Error: bad input => " << line << std::endl;
+			std::cerr << "Error: bad input => " << line << std::endl;
 		else if (value < 0)
-			std::cout << "Error: not a positive number." << std::endl;
+			std::cerr << "Error: not a positive number." << std::endl;
 		else
-			std::cout << "Error: too large a number." << std::endl;
+			std::cerr << "Error: too large a number." << std::endl;
 		return false;
 	}
 	return true;
 }
 
 void	BitcoinExchange::calculatedAndPrintValue(const std::string& line) {
+
 	std::string	date = line.substr(0, 10);
-	float			value = extractValue(line.substr(13));
+	float		value = extractValue(line.substr(13));
 
 	dataBaseMap::iterator it = dataBase.find(date);
-	if (it == dataBase.end()) {
+	if (it != dataBase.end()) {
 		std::cout << date << " => " << value << " = " << value * it->second << std::endl;
 	}
 	else {
+		
 		it = dataBase.lower_bound(date);
 		if (it != dataBase.begin())
 			--it;
+		else {
+			std::cerr << "Error: date is out of range." << std::endl;
+			return ;
+		}
 		std::cout << date << " => " << value << " = " << value * it->second << std::endl;
+		
 	}
 }
 
 void	BitcoinExchange::parseFile() {
 	std::string	line;
-	std::getline(file, line);
+
 	while (!file.eof()) {
 		std::getline(file, line);
 		line = strTrim(line, " \t");
-		if (!line.empty()) {
-			if (line != "date | value")
-				file.seekg(((line.size() + 1) * -1) , std::ios::cur);
+		if (!line.empty()){
+			if (line != "date | value") throw std::runtime_error("Error: Invalid input file header !");
 			break;
 		}
 	}
@@ -164,8 +172,7 @@ void BitcoinExchange::fillDataBase() {
 		std::getline(dataBaseFile, line);
 		line = strTrim(line, " \t");
 		if (!line.empty()){
-			if (line != "date,exchange_rate")
-				dataBaseFile.seekg((line.size() + 1) * -1 , std::ios::cur);
+			if (line != "date,exchange_rate") throw std::runtime_error("Error: Invalid database file header !");
 			break;
 		}
 	}

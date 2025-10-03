@@ -15,7 +15,8 @@ std::stack<int> RPN::getStack() const { return _stack; }
 
 void RPN::calculateInputs(std::string input){
 	long	res = 0;
-	for (size_t i = 0; i < input.size(); i++){
+	size_t i = 0;
+	while (i < input.size()){
 		if (isdigit(input[i])) {
 			_stack.push(input[i] - '0');
 			i++;
@@ -52,6 +53,7 @@ void RPN::calculateInputs(std::string input){
 		}
 		if (input[i] != ' ' && input[i] != '\0')
 			throw std::runtime_error("Invalid character in the input.");
+		i++;
 	}
 	if (_stack.size() != 1)
 		throw std::runtime_error("The user input not valid.");
