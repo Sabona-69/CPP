@@ -9,10 +9,15 @@
 #include <cstdlib>
 #include <algorithm>
 
+#define VECTOR 1
+#define DEQUE 2
 
+
+bool isAllDegit(char *str);
 
 class PmergeMe {
     private:
+		std::vector<int> inputs;
 		std::vector<int> _vector;
 		std::deque<int> _deque;
 
@@ -22,17 +27,23 @@ class PmergeMe {
         PmergeMe(const PmergeMe &assign);
         PmergeMe& operator=(const PmergeMe &assign);
 
-		void printContainer(const std::string& msg);
+		void	parseInput(char **av);
+		void	fillContainers(int type);
+		void 	printContainer(const std::string& msg);
 		
 		std::vector<int> getVector() const;
 		std::deque<int> getDeque() const;
-		void fillContainers(char **argv);
 		void sortDeque();
 		void sortVector();
+		std::vector<int> fordJohnson(std::vector<int> vec);
+		std::deque<int>	fordJohnson(std::deque<int> deq);
+
+
+
 
 };
 
 
-bool isAllDegit(char *str);
+
 
 #endif
