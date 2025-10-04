@@ -1,6 +1,6 @@
 #include "AForm.hpp"
 
-AForm::AForm() : name("Default"), isSigned(false), execGrade(1), signGrade(1) {
+AForm::AForm() : name("Default"), isSigned(false), execGrade(0), signGrade(0) {
     std::cout << "Default AForm Constructor called !" << std::endl;
 }
 

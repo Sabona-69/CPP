@@ -1,30 +1,29 @@
-NAME	= 
+
+NAME	= multipleForms
 
 RM		= rm -f
 
-SRC		= (files ends with .cpp) \
+SRC		= AForm.cpp Bureaucrat.cpp PresidentialPardonForm.cpp RobotomyRequestForm.cpp ShrubberyCreationForm.cpp main.cpp\
 
-CPPFLAGS	= -Wall -Wextra -Werror -std=c++98 # -g3  -fsanitize=address
+CXXFLAGS	= -Wall -Wextra -Werror -std=c++98 # -g3  -fsanitize=address
 
 OBJ		= $(SRC:.cpp=.o)
 
-CPP		= c++
+CXX		= c++
 
-INCLUDE = (files ends with .hpp) 
+INCLUDE = AForm.hpp Bureaucrat.hpp PresidentialPardonForm.hpp RobotomyRequestForm.hpp ShrubberyCreationForm.hpp 
 
 all		: $(NAME)
 			
 %.o		: %.cpp $(INCLUDE)
-			$(CPP) $(CPPFLAGS) -c $<  -o $@
-
+			$(CXX) $(CXXFLAGS) -c $<  -o $@
 $(NAME)	: $(OBJ)
-			$(CPP) $(CPPFLAGS) $(OBJ) -o $@
-
+			$(CXX) $(CXXFLAGS) $(OBJ) -o $@
 clean	: 
 			$(RM) $(OBJ)
 
 fclean	: clean
-			$(RM) $(NAME) 
+			$(RM) $(NAME) *_shrubbery
 
 re		: fclean all
 

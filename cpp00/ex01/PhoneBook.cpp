@@ -9,10 +9,6 @@ PhoneBook::PhoneBook() {
 PhoneBook::~PhoneBook(){
 }
 
-Contact *PhoneBook::get_contact() {
-	return contacts;
-}
-
 int PhoneBook::get_count() {
 	return count;
 }
@@ -22,10 +18,20 @@ void	PhoneBook::set_contact()
 	Contact	temp;
 
 	temp.set_first_name();
+	if (temp.get_first_name().empty())
+		return ;
 	temp.set_last_name();
+	if (temp.get_last_name().empty())
+		return ;
 	temp.set_nickname();
+	if (temp.get_nickname().empty())
+		return ;
 	temp.set_phone_number();
+	if (temp.get_phone_number().empty())
+		return ;
 	temp.set_darkest_secret();
+	if (temp.get_darkest_secret().empty())
+		return ;
 	contacts[count % 8] = temp;
 	count++;
 }
@@ -38,9 +44,8 @@ std::string get_input(std::string prompt)
 	while (true) {
 		isValid = true;
         std::cout << prompt;
-        std::getline(std::cin, input);
-		if (std::cin.eof())
-			exit(0);
+        if (!std::getline(std::cin, input))
+			return std::string("");
 		for (size_t i = 0; i < input.length(); i++) {
             if (!isprint((unsigned char)input[i])) {
                 isValid = false;
@@ -56,18 +61,17 @@ std::string get_input(std::string prompt)
 
 void PhoneBook::get_contact_info() {
 	std::string input;
-	int 		i;
+	int 		i = 0;;
 
 	if (!count)
 		return ;
 	while (true){
 		input = get_input("Enter index of contact :");
-		i = std::atoi(input.c_str());
-		if(i < 1 || i > count)
+		i = input[0] - 48;
+		if (input.length() != 1 || i < 1 || i > count)
 			std::cout << "Invalid Index" << std::endl;
 		else
 			break;
-		
 	}
 	std::cout << "First name : " << contacts[i - 1].get_first_name() << std::endl;
 	std::cout << "Last name : " << contacts[i - 1].get_last_name() << std::endl;
@@ -90,7 +94,7 @@ void PhoneBook::get_table()
 	int	breaker = get_count();
 
 	if (!count){
-		std::cout << "The PhoneBook is empty ! try to ad a new one\n";
+		std::cout << "The PhoneBook is empty ! try to add a new one\n";
 		return ;
 	}
 	if (breaker > 8)
