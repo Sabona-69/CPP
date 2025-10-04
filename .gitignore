@@ -1,0 +1,84 @@
+# Compiled Object files
+*.o
+*.obj
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+*.dll
+
+# Compiled Static libraries
+*.a
+*.lib
+
+# Executables
+*.exe
+*.out
+*.app
+
+# Specific executables (common names in 42 projects)
+megaphone
+phonebook
+account
+zombie
+brain
+violence
+sed
+harl
+fixed
+bsp
+claptrap
+fragtrap
+scavtrap
+diamondtrap
+animal
+brain
+bureaucrat
+form
+shrubbery
+robotomy
+presidential
+intern
+convert
+serialize
+identify
+easyfind
+span
+mutantstack
+
+# Debug files
+*.dSYM/
+*.su
+*.idb
+*.pdb
+
+# Editor and IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# CMake
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+Makefile.cmake
+
+# Prerequisites
+*.d
+
+# Test files
+test
+tester
+*.test
+
+# Temporary files
+*.tmp
+*.bak
+*.log
+
+# Core dumps
+core
+core.*

@@ -1,6 +1,5 @@
 #include "Span.hpp"
 
-#include <climits>
 #include <iostream>
 
 int main()
@@ -25,7 +24,7 @@ int main()
 		for (size_t i = 0; i < sp2.getMax(); ++i){
 			vec.push_back(i + 1);
 		}
-		sp2.addNumber(vec.begin(), vec.end());		
+		sp2.addNumber(vec.begin(), vec.end());
 
 		// for (size_t i = 0; i < sp2.getMax(); ++i) {
 		// 	std::cout << "sp2 [" << i <<  "] : " << sp2.getVecNum()[i] << std::endl;

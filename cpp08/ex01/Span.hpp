@@ -10,7 +10,7 @@ class Span {
 		std::vector<int> vecNum;
 		unsigned int max;
 		Span();
-		public:
+	public:
 		Span(const Span &assign);
 		~Span();
 		Span(unsigned int n);
@@ -19,8 +19,6 @@ class Span {
 		void	addNumber(std::vector<int>::iterator begin, std::vector<int>::iterator end);
 		unsigned int shortestSpan();
 		unsigned int longestSpan();
-
-	public:
 		const std::vector<int>&	getVecNum() const;
 		unsigned int		getMax() const;
 

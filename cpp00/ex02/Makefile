@@ -4,7 +4,7 @@ RM		= rm -f
 
 SRC		= tests.cpp Account.cpp \
 
-CFLAGS	= -Wall -Wextra -Werror
+CFLAGS	= -Wall -Wextra -Werror #-std=c++98
 
 OBJ		= $(SRC:.cpp=.o)
 

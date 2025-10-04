@@ -20,6 +20,11 @@ int main()
     delete j;//should not create a leak
     delete i;
 
+    Dog basic;
+    {
+        Dog tmp = basic;
+    }
+
     Dog dog1;
     Dog dog2(dog1); 
     dog1 = dog2;

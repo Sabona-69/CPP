@@ -20,19 +20,19 @@ std::string Contact::get_first_name() {
 
 std::string Contact::get_last_name() {
 	return last_name;
-};
+}
 
 std::string Contact::get_nickname() {
 	return nickname;
-};
+}
 
 std::string Contact::get_phone_number() {
 	return phone_number;
-};
+}
 
 std::string Contact::get_darkest_secret() {
 	return darkest_secret;
-};
+}
 
 void	Contact::set_first_name()
 {
@@ -52,14 +52,20 @@ void	Contact::set_phone_number()
 	{
 		bool checker = true;
 		phone_number = get_input("Phone number : ");
-		for (int i = 0; i < (int)phone_number.length(); i++)
+		if (phone_number.length() > 10)
 		{
-			if (!isdigit(phone_number[i])){
-				std::cout << "The input must be numbers !\n";
-				checker = false;
-				break;
-			}
+			std::cout << "Invalid number !\n";
+			checker = false;
 		}
+		else
+			for (int i = 0; i < (int)phone_number.length(); i++)
+			{
+				if (!isdigit(phone_number[i])){
+					std::cout << "The input must be numbers !\n";
+					checker = false;
+					break;
+				}
+			}
 		if (checker)
 			return;	
 	}	

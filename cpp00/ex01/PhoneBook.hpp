@@ -4,6 +4,7 @@
 #include "Contact.hpp"
 #include <iostream>
 
+
 class PhoneBook{
 	private:
 		int		count;
@@ -11,7 +12,6 @@ class PhoneBook{
 	public:
 		PhoneBook();
 		~PhoneBook();
-		Contact *get_contact();
 		int get_count();
 		void set_contact();
 		void get_table();

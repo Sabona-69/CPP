@@ -8,7 +8,6 @@ MateriaSource::MateriaSource(){
 MateriaSource::~MateriaSource(){
     for (int i = 0; i < 4; i++)
         delete templates[i];
-        // if (templates[i])
 }
 
 MateriaSource::MateriaSource(const MateriaSource &assign){

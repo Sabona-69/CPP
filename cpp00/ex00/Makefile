@@ -1,4 +1,3 @@
-
 NAME	= megaphone
 
 RM		= rm -f
@@ -7,11 +6,11 @@ SRC		= megaphone.cpp \
 
 CFLAGS	= -Wall -Wextra -Werror #-std=c++98
 
-OBJ		= $(SRC:.c=.o)
+OBJ		= $(SRC:.cpp=.o)
 
 CC		= c++
 
-INCLUDE = .hpp
+# INCLUDE = .hpp
 
 all		: $(NAME)
 			

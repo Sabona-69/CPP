@@ -6,7 +6,7 @@
 /*   By: hel-omra <hel-omra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 14:44:43 by hel-omra          #+#    #+#             */
-/*   Updated: 2024/12/26 06:07:11 by hel-omra         ###   ########.fr       */
+/*   Updated: 2025/01/10 15:20:15 by hel-omra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,8 @@ int	Account::checkAmount()	const{
 
 void	Account::_displayTimestamp(){
 	char timeStr[20];
-	std::time_t now = std::time(0);  // Get current time
-	std::tm *ltm = std::localtime(&now);  // Convert to local time
-
-	// Format the timestamp
+	std::time_t now = std::time(0);
+	std::tm *ltm = std::localtime(&now);
 	std::strftime(timeStr, sizeof(timeStr), "[%Y%m%d_%H%M%S] ", ltm);
 	std::cout << timeStr;
 };

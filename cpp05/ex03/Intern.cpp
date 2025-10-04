@@ -36,8 +36,8 @@ AForm*    Intern::shrubbery(std::string target){
 
 AForm* Intern::makeForm(std::string form, std::string target){
     std::string forms[3] = {
-        "presidential pardon",
         "robotomy request",
+        "presidential pardon",
         "shrubbery creation"
     };
     AForm* (Intern::*func[])(std::string) = {&Intern::presidential, &Intern::robotomy, &Intern::shrubbery};    
