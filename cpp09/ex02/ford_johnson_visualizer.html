@@ -1,0 +1,1197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ford-Johnson Algorithm Visualizer</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            padding: 30px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 1.1em;
+        }
+
+        .input-section {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+        }
+
+        input[type="text"] {
+            flex: 1;
+            min-width: 300px;
+            padding: 12px 20px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        input[type="text"]:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        button {
+            padding: 12px 30px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            font-weight: bold;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .controls {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .speed-control {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .speed-control label {
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .speed-control input[type="range"] {
+            width: 150px;
+        }
+
+        .visualization-area {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 30px;
+            min-height: 400px;
+        }
+
+        .step-info {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            font-size: 18px;
+            font-weight: bold;
+            text-align: center;
+            position: relative;
+        }
+
+        .step-info.depth-1 {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%);
+            margin-left: 20px;
+        }
+
+        .step-info.depth-2 {
+            background: linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%);
+            margin-left: 40px;
+        }
+
+        .step-info.depth-3 {
+            background: linear-gradient(135deg, #f9ca24 0%, #f0932b 100%);
+            margin-left: 60px;
+        }
+
+        .recursion-badge {
+            position: absolute;
+            top: -8px;
+            right: 10px;
+            background: rgba(255, 255, 255, 0.3);
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: normal;
+        }
+
+        .array-display {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+            justify-content: center;
+            align-items: flex-end;
+            min-height: 100px;
+        }
+
+        .array-item {
+            padding: 15px 20px;
+            background: white;
+            border: 2px solid #667eea;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 18px;
+            transition: all 0.3s ease;
+            position: relative;
+            min-width: 50px;
+            text-align: center;
+        }
+
+        .array-item.highlight {
+            background: #667eea;
+            color: white;
+            transform: scale(1.1);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .array-item.compared {
+            background: #ffd93d;
+            border-color: #f39c12;
+        }
+
+        .array-item.sorted {
+            background: #6bcf7f;
+            border-color: #27ae60;
+            color: white;
+        }
+
+        .array-item.pending {
+            background: #ff6b6b;
+            border-color: #c0392b;
+            color: white;
+        }
+
+        .pair-container {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            padding: 10px;
+            border: 2px dashed #999;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.5);
+        }
+
+        .pair-item {
+            display: flex;
+            gap: 5px;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .stat-box {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            border: 2px solid #667eea;
+            text-align: center;
+        }
+
+        .stat-label {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+
+        .stat-value {
+            color: #667eea;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .jacobsthal-sequence {
+            background: #e8f5e9;
+            border: 2px solid #4caf50;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .jacobsthal-sequence h3 {
+            color: #2e7d32;
+            margin-bottom: 10px;
+        }
+
+        .jacobsthal-numbers {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .jacobsthal-number {
+            padding: 8px 15px;
+            background: #4caf50;
+            color: white;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+
+        .legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 20px;
+            padding: 15px;
+            background: white;
+            border-radius: 10px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .legend-box {
+            width: 30px;
+            height: 30px;
+            border-radius: 5px;
+            border: 2px solid;
+        }
+
+        .legend-box.default {
+            background: white;
+            border-color: #667eea;
+        }
+
+        .legend-box.highlight {
+            background: #667eea;
+            border-color: #667eea;
+        }
+
+        .legend-box.compared {
+            background: #ffd93d;
+            border-color: #f39c12;
+        }
+
+        .legend-box.sorted {
+            background: #6bcf7f;
+            border-color: #27ae60;
+        }
+
+        .legend-box.pending {
+            background: #ff6b6b;
+            border-color: #c0392b;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .array-item {
+            animation: slideIn 0.3s ease;
+        }
+
+        .error-message {
+            background: #ff6b6b;
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            text-align: center;
+            display: none;
+        }
+
+        .info-box {
+            background: #e3f2fd;
+            border: 2px solid #2196f3;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .info-box h3 {
+            color: #1976d2;
+            margin-bottom: 10px;
+        }
+
+        .info-box p {
+            color: #424242;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔀 Ford-Johnson Algorithm Visualizer</h1>
+        <p class="subtitle">Merge-Insertion Sort (PmergeMe) - Step-by-step Visualization</p>
+
+        <div class="input-section">
+            <input type="text" id="inputArray" placeholder="Enter numbers separated by spaces (e.g., 3 5 9 7 4 2 8 1 6)" 
+                   value="3 5 9 7 4 2 8 1 6">
+            <button onclick="startVisualization()">Start Sorting</button>
+            <button onclick="generateRandom()">Random Array</button>
+        </div>
+
+        <div class="controls">
+            <button id="playBtn" onclick="togglePlay()" disabled>▶ Play</button>
+            <button onclick="previousStep()" disabled id="prevBtn">◀ Previous</button>
+            <button onclick="nextStep()" disabled id="nextBtn">Next ▶</button>
+            <button onclick="reset()">Reset</button>
+            <div class="speed-control">
+                <label for="speed">Speed:</label>
+                <input type="range" id="speed" min="100" max="2000" value="1000" step="100">
+                <span id="speedValue">1.0s</span>
+            </div>
+        </div>
+
+        <div class="error-message" id="errorMsg"></div>
+
+        <div class="info-box">
+            <h3>How Ford-Johnson Algorithm Works:</h3>
+            <p><strong>Step 1:</strong> Pair up elements and compare them, keeping larger values as 'a' and smaller as 'b'</p>
+            <p><strong>Step 2:</strong> Recursively sort the 'a' values (larger elements from pairs)</p>
+            <p><strong>Step 3:</strong> Build main chain starting with first 'b' value, then all 'a' values</p>
+            <p><strong>Step 4:</strong> Insert remaining 'b' values using Jacobsthal sequence order for optimal binary insertion</p>
+            <p><strong>Step 5:</strong> Binary search each 'b' value into position, limited to its paired 'a' position</p>
+        </div>
+
+        <div class="visualization-area">
+            <div class="step-info" id="stepInfo">Enter numbers and click "Start Sorting"</div>
+            <div id="jacobsthalDisplay"></div>
+            <div class="array-display" id="arrayDisplay"></div>
+            <div id="pairsDisplay"></div>
+            <div id="mainChainDisplay"></div>
+        </div>
+
+        <div class="stats">
+            <div class="stat-box">
+                <div class="stat-label">Current Step</div>
+                <div class="stat-value" id="currentStep">0</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-label">Total Steps</div>
+                <div class="stat-value" id="totalSteps">0</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-label">Array Size</div>
+                <div class="stat-value" id="arraySize">0</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-label">Comparisons</div>
+                <div class="stat-value" id="comparisons">0</div>
+            </div>
+        </div>
+
+        <div class="legend">
+            <div class="legend-item">
+                <div class="legend-box default"></div>
+                <span>Unsorted</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-box highlight"></div>
+                <span>Current Focus</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-box compared"></div>
+                <span>Being Compared</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-box sorted"></div>
+                <span>In Main Chain</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-box pending"></div>
+                <span>Pending Insertion</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let originalArray = [];
+        let steps = [];
+        let currentStepIndex = 0;
+        let isPlaying = false;
+        let playInterval = null;
+        let comparisonCount = 0;
+
+        const speedSlider = document.getElementById('speed');
+        const speedValue = document.getElementById('speedValue');
+
+        speedSlider.addEventListener('input', function() {
+            speedValue.textContent = (this.value / 1000).toFixed(1) + 's';
+            if (isPlaying) {
+                togglePlay();
+                togglePlay();
+            }
+        });
+
+        function showError(message) {
+            const errorMsg = document.getElementById('errorMsg');
+            errorMsg.textContent = message;
+            errorMsg.style.display = 'block';
+            setTimeout(() => {
+                errorMsg.style.display = 'none';
+            }, 3000);
+        }
+
+        function generateRandom() {
+            const size = Math.floor(Math.random() * 10) + 5;
+            const numbers = [];
+            for (let i = 0; i < size; i++) {
+                numbers.push(Math.floor(Math.random() * 100) + 1);
+            }
+            document.getElementById('inputArray').value = numbers.join(' ');
+        }
+
+        function startVisualization() {
+            const input = document.getElementById('inputArray').value.trim();
+            if (!input) {
+                showError('Please enter some numbers!');
+                return;
+            }
+
+            const numbers = input.split(/\s+/).map(num => parseInt(num)).filter(n => !isNaN(n));
+            if (numbers.length === 0) {
+                showError('Please enter valid numbers!');
+                return;
+            }
+
+            originalArray = numbers;
+            steps = [];
+            currentStepIndex = 0;
+            comparisonCount = 0;
+            isPlaying = false;
+
+            document.getElementById('arraySize').textContent = numbers.length;
+            document.getElementById('comparisons').textContent = 0;
+
+            generateSteps(numbers);
+            
+            document.getElementById('playBtn').disabled = false;
+            document.getElementById('nextBtn').disabled = false;
+            document.getElementById('prevBtn').disabled = false;
+
+            displayStep(0);
+        }
+
+        function generateJacobsthal(limit) {
+            const jacobsthal = [0, 1];
+            while (true) {
+                const next = jacobsthal[jacobsthal.length - 1] + 2 * jacobsthal[jacobsthal.length - 2];
+                if (next > limit) break;
+                jacobsthal.push(next);
+            }
+            return jacobsthal;
+        }
+
+        function getInsertionOrder(n) {
+            if (n === 0) return [];
+            
+            const jacobsthal = generateJacobsthal(n + 1);
+            const order = [];
+            
+            for (let i = 2; i < jacobsthal.length; i++) {
+                const current = jacobsthal[i];
+                const previous = jacobsthal[i - 1];
+                
+                for (let j = Math.min(current, n); j > previous && j > 0; j--) {
+                    order.push(j);
+                }
+                
+                if (current >= n) break;
+            }
+            
+            const used = new Array(n + 1).fill(false);
+            for (const idx of order) {
+                if (idx <= n) used[idx] = true;
+            }
+            
+            for (let i = 1; i <= n; i++) {
+                if (!used[i]) order.push(i);
+            }
+            
+            return order;
+        }
+
+        function generateSteps(arr) {
+            steps.push({
+                description: 'Initial unsorted array',
+                array: [...arr],
+                highlights: [],
+                type: 'initial',
+                depth: 0
+            });
+
+            if (arr.length <= 1) {
+                steps.push({
+                    description: 'Array already sorted (size ≤ 1)',
+                    array: [...arr],
+                    highlights: arr.map((_, i) => i),
+                    type: 'sorted',
+                    depth: 0
+                });
+                updateStepCounter();
+                return;
+            }
+
+            fordJohnsonVisualize(arr, 0);
+            updateStepCounter();
+        }
+
+        function getDepthPrefix(depth) {
+            return '  '.repeat(depth);
+        }
+
+        function fordJohnsonVisualize(arr, depth) {
+            const n = arr.length;
+            let hasLeftover = n % 2 === 1;
+            let leftover = null;
+            let workingArray = [...arr];
+
+            const prefix = getDepthPrefix(depth);
+            const depthMarker = depth > 0 ? ` [Recursion depth ${depth}]` : '';
+
+            if (hasLeftover) {
+                leftover = workingArray.pop();
+                steps.push({
+                    description: `${prefix}Odd number of elements (${n}): saving ${leftover} for later insertion${depthMarker}`,
+                    array: [...workingArray],
+                    leftover: leftover,
+                    type: 'leftover',
+                    depth: depth
+                });
+            }
+
+            // Step 1: Create pairs
+            const pairs = [];
+            steps.push({
+                description: `${prefix}Creating pairs from array: [${workingArray.join(', ')}]${depthMarker}`,
+                array: [...workingArray],
+                type: 'start_pairing',
+                depth: depth
+            });
+
+            for (let i = 0; i < workingArray.length; i += 2) {
+                comparisonCount++;
+                const [smaller, larger] = workingArray[i] < workingArray[i + 1] 
+                    ? [workingArray[i], workingArray[i + 1]]
+                    : [workingArray[i + 1], workingArray[i]];
+                pairs.push({ b: smaller, a: larger });
+                
+                steps.push({
+                    description: `${prefix}Pair ${Math.floor(i/2) + 1}: Compare ${workingArray[i]} and ${workingArray[i + 1]} → (b=${smaller}, a=${larger})${depthMarker}`,
+                    array: [...workingArray],
+                    highlights: [i, i + 1],
+                    pairs: pairs.map(p => [p.b, p.a]),
+                    type: 'pairing',
+                    comparisons: comparisonCount,
+                    depth: depth
+                });
+            }
+
+            steps.push({
+                description: `${prefix}Created ${pairs.length} pairs. Pairs format: (b=smaller, a=larger)${depthMarker}`,
+                pairs: pairs.map(p => [p.b, p.a]),
+                pairLabels: pairs.map((p, i) => `(${p.b},${p.a})`),
+                type: 'pairs_complete',
+                depth: depth
+            });
+
+            // Extract 'a' values
+            const aValues = pairs.map(p => p.a);
+            
+            steps.push({
+                description: `${prefix}Extract larger values (a) from each pair: [${aValues.join(', ')}]${depthMarker}`,
+                array: aValues,
+                highlights: aValues.map((_, i) => i),
+                pairs: pairs.map(p => [p.b, p.a]),
+                type: 'extract_a',
+                depth: depth
+            });
+
+            // RECURSIVE sort of 'a' values
+            let sortedA;
+            if (aValues.length <= 1) {
+                sortedA = [...aValues];
+                steps.push({
+                    description: `${prefix}Base case: only ${aValues.length} element, already sorted${depthMarker}`,
+                    array: sortedA,
+                    highlights: sortedA.map((_, i) => i),
+                    type: 'base_case',
+                    depth: depth
+                });
+            } else {
+                steps.push({
+                    description: `${prefix}📥 RECURSION: Sort ${aValues.length} larger values [${aValues.join(', ')}] using Ford-Johnson`,
+                    array: aValues,
+                    highlights: aValues.map((_, i) => i),
+                    type: 'recursive_call',
+                    depth: depth
+                });
+                
+                // Recursive call
+                sortedA = fordJohnsonRecursive(aValues, depth + 1);
+                
+                steps.push({
+                    description: `${prefix}📤 RECURSION RETURNED: [${sortedA.join(', ')}] (sorted 'a' values)`,
+                    array: sortedA,
+                    highlights: sortedA.map((_, i) => i),
+                    type: 'recursive_return',
+                    depth: depth
+                });
+            }
+
+            // Reorder pairs according to sorted 'a' values
+            const sortedPairs = [];
+            const used = new Array(pairs.length).fill(false);
+            
+            for (const aVal of sortedA) {
+                for (let j = 0; j < pairs.length; j++) {
+                    if (!used[j] && pairs[j].a === aVal) {
+                        sortedPairs.push(pairs[j]);
+                        used[j] = true;
+                        break;
+                    }
+                }
+            }
+
+            steps.push({
+                description: `${prefix}Reorder pairs based on sorted a values: ${sortedPairs.map(p => `(${p.b},${p.a})`).join(' ')}${depthMarker}`,
+                pairs: sortedPairs.map(p => [p.b, p.a]),
+                type: 'reorder_pairs',
+                depth: depth
+            });
+
+            // Build main chain: b1, a1, a2, ..., an
+            const mainChain = [];
+            if (sortedPairs.length > 0) {
+                mainChain.push(sortedPairs[0].b);
+                
+                steps.push({
+                    description: `${prefix}S = [${sortedPairs[0].b}] ← Start main chain S with first b value (b₁)${depthMarker}`,
+                    mainChain: [...mainChain],
+                    pairs: sortedPairs.map(p => [p.b, p.a]),
+                    type: 'main_chain_start',
+                    depth: depth
+                });
+
+                for (const pair of sortedPairs) {
+                    mainChain.push(pair.a);
+                }
+
+                steps.push({
+                    description: `${prefix}S = [${mainChain.join(', ')}] ← Add all a values to main chain${depthMarker}`,
+                    mainChain: [...mainChain],
+                    pairs: sortedPairs.map(p => [p.b, p.a]),
+                    type: 'main_chain_with_a',
+                    depth: depth
+                });
+            }
+
+            // Insert remaining 'b' values using Jacobsthal order
+            if (sortedPairs.length > 1) {
+                const numToInsert = sortedPairs.length - 1; // b2, b3, ..., bn
+                const insertionOrder = getInsertionOrder(numToInsert);
+                const jacobsthal = generateJacobsthal(numToInsert + 1);
+                
+                steps.push({
+                    description: `${prefix}Need to insert ${numToInsert} remaining b values: ${sortedPairs.slice(1).map(p => p.b).join(', ')}${depthMarker}`,
+                    jacobsthal: jacobsthal,
+                    mainChain: [...mainChain],
+                    pendingInsertions: sortedPairs.slice(1).map(p => p.b),
+                    type: 'pending_b_values',
+                    depth: depth
+                });
+
+                steps.push({
+                    description: `${prefix}Jacobsthal sequence (first ${jacobsthal.length} terms): ${jacobsthal.join(', ')}${depthMarker}`,
+                    jacobsthal: jacobsthal,
+                    insertionOrder: insertionOrder,
+                    mainChain: [...mainChain],
+                    type: 'jacobsthal',
+                    depth: depth
+                });
+
+                steps.push({
+                    description: `${prefix}Insertion order for ${numToInsert} b-values (indices): [${insertionOrder.join(', ')}]${depthMarker}`,
+                    insertionOrder: insertionOrder,
+                    mainChain: [...mainChain],
+                    pendingInsertions: insertionOrder.map(i => sortedPairs[i].b),
+                    type: 'insertion_order',
+                    depth: depth
+                });
+
+                for (const idx of insertionOrder) {
+                    if (idx < sortedPairs.length) {
+                        const bValue = sortedPairs[idx].b;
+                        const aValue = sortedPairs[idx].a;
+                        const aPos = mainChain.indexOf(aValue);
+
+                        steps.push({
+                            description: `${prefix}Insert b₍${idx+1}₎=${bValue} (paired with a₍${idx+1}₎=${aValue} at pos ${aPos}). Search range: [0, ${aPos}]${depthMarker}`,
+                            mainChain: [...mainChain],
+                            insertValue: bValue,
+                            searchLimit: aPos,
+                            highlightPos: aPos,
+                            type: 'before_insert',
+                            depth: depth
+                        });
+
+                        // Binary search insertion (limited to position of paired 'a')
+                        let left = 0;
+                        let right = Math.min(aPos + 1, mainChain.length);
+                        
+                        while (left < right) {
+                            const mid = Math.floor(left + (right - left) / 2);
+                            comparisonCount++;
+                            
+                            if (mainChain[mid] < bValue) {
+                                left = mid + 1;
+                            } else {
+                                right = mid;
+                            }
+                        }
+
+                        mainChain.splice(left, 0, bValue);
+
+                        steps.push({
+                            description: `${prefix}✓ Inserted ${bValue} at position ${left}. S = [${mainChain.join(', ')}]${depthMarker}`,
+                            mainChain: [...mainChain],
+                            highlights: [left],
+                            comparisons: comparisonCount,
+                            type: 'after_insert',
+                            depth: depth
+                        });
+                    }
+                }
+            }
+
+            // Insert leftover if exists
+            if (hasLeftover) {
+                steps.push({
+                    description: `${prefix}Insert leftover element ${leftover} into sorted chain${depthMarker}`,
+                    mainChain: [...mainChain],
+                    insertValue: leftover,
+                    type: 'before_leftover',
+                    depth: depth
+                });
+
+                let left = 0;
+                let right = mainChain.length;
+                
+                while (left < right) {
+                    const mid = Math.floor(left + (right - left) / 2);
+                    comparisonCount++;
+                    
+                    if (mainChain[mid] < leftover) {
+                        left = mid + 1;
+                    } else {
+                        right = mid;
+                    }
+                }
+
+                mainChain.splice(left, 0, leftover);
+
+                steps.push({
+                    description: `${prefix}✓ Inserted leftover ${leftover} at position ${left}. S = [${mainChain.join(', ')}]${depthMarker}`,
+                    mainChain: [...mainChain],
+                    highlights: [left],
+                    comparisons: comparisonCount,
+                    type: 'after_leftover',
+                    depth: depth
+                });
+            }
+
+            if (depth === 0) {
+                steps.push({
+                    description: '✅ Sorting complete! Final sorted array: [' + mainChain.join(', ') + ']',
+                    mainChain: [...mainChain],
+                    highlights: mainChain.map((_, i) => i),
+                    type: 'complete',
+                    comparisons: comparisonCount,
+                    depth: depth
+                });
+            }
+
+            return mainChain;
+        }
+
+        // Recursive helper that performs Ford-Johnson and returns result
+        function fordJohnsonRecursive(arr, depth) {
+            if (arr.length <= 1) {
+                return arr;
+            }
+
+            const n = arr.length;
+            let hasLeftover = n % 2 === 1;
+            let leftover = null;
+            let workingArray = [...arr];
+
+            if (hasLeftover) {
+                leftover = workingArray.pop();
+            }
+
+            // Create pairs
+            const pairs = [];
+            for (let i = 0; i < workingArray.length; i += 2) {
+                const [smaller, larger] = workingArray[i] < workingArray[i + 1] 
+                    ? [workingArray[i], workingArray[i + 1]]
+                    : [workingArray[i + 1], workingArray[i]];
+                pairs.push({ b: smaller, a: larger });
+            }
+
+            // Extract and recursively sort 'a' values
+            const aValues = pairs.map(p => p.a);
+            const sortedA = aValues.length <= 1 ? aValues : fordJohnsonRecursive(aValues, depth + 1);
+
+            // Reorder pairs
+            const sortedPairs = [];
+            const used = new Array(pairs.length).fill(false);
+            for (const aVal of sortedA) {
+                for (let j = 0; j < pairs.length; j++) {
+                    if (!used[j] && pairs[j].a === aVal) {
+                        sortedPairs.push(pairs[j]);
+                        used[j] = true;
+                        break;
+                    }
+                }
+            }
+
+            // Build main chain
+            const mainChain = [];
+            if (sortedPairs.length > 0) {
+                mainChain.push(sortedPairs[0].b);
+                for (const pair of sortedPairs) {
+                    mainChain.push(pair.a);
+                }
+            }
+
+            // Insert remaining b values
+            if (sortedPairs.length > 1) {
+                const insertionOrder = getInsertionOrder(sortedPairs.length - 1);
+                for (const idx of insertionOrder) {
+                    if (idx < sortedPairs.length) {
+                        const bValue = sortedPairs[idx].b;
+                        const aValue = sortedPairs[idx].a;
+                        const aPos = mainChain.indexOf(aValue);
+                        
+                        let left = 0;
+                        let right = Math.min(aPos + 1, mainChain.length);
+                        while (left < right) {
+                            const mid = Math.floor(left + (right - left) / 2);
+                            if (mainChain[mid] < bValue) {
+                                left = mid + 1;
+                            } else {
+                                right = mid;
+                            }
+                        }
+                        mainChain.splice(left, 0, bValue);
+                    }
+                }
+            }
+
+            // Insert leftover
+            if (hasLeftover) {
+                let left = 0;
+                let right = mainChain.length;
+                while (left < right) {
+                    const mid = Math.floor(left + (right - left) / 2);
+                    if (mainChain[mid] < leftover) {
+                        left = mid + 1;
+                    } else {
+                        right = mid;
+                    }
+                }
+                mainChain.splice(left, 0, leftover);
+            }
+
+            return mainChain;
+        }
+
+        function displayStep(index) {
+            if (index < 0 || index >= steps.length) return;
+
+            currentStepIndex = index;
+            const step = steps[index];
+
+            const stepInfoDiv = document.getElementById('stepInfo');
+            stepInfoDiv.textContent = step.description;
+            stepInfoDiv.className = 'step-info';
+            
+            if (step.depth > 0) {
+                stepInfoDiv.classList.add(`depth-${Math.min(step.depth, 3)}`);
+                const badge = document.createElement('span');
+                badge.className = 'recursion-badge';
+                badge.textContent = `Depth ${step.depth}`;
+                stepInfoDiv.appendChild(badge);
+            }
+            
+            document.getElementById('currentStep').textContent = index + 1;
+            if (step.comparisons !== undefined) {
+                document.getElementById('comparisons').textContent = step.comparisons;
+            }
+
+            const arrayDisplay = document.getElementById('arrayDisplay');
+            const pairsDisplay = document.getElementById('pairsDisplay');
+            const mainChainDisplay = document.getElementById('mainChainDisplay');
+            const jacobsthalDisplay = document.getElementById('jacobsthalDisplay');
+
+            arrayDisplay.innerHTML = '';
+            pairsDisplay.innerHTML = '';
+            mainChainDisplay.innerHTML = '';
+            jacobsthalDisplay.innerHTML = '';
+
+            // Display Jacobsthal sequence if present
+            if (step.jacobsthal) {
+                jacobsthalDisplay.innerHTML = `
+                    <div class="jacobsthal-sequence">
+                        <h3>Jacobsthal Sequence:</h3>
+                        <div class="jacobsthal-numbers">
+                            ${step.jacobsthal.map(num => `<span class="jacobsthal-number">${num}</span>`).join('')}
+                        </div>
+                    </div>
+                `;
+            }
+
+            if (step.insertionOrder) {
+                jacobsthalDisplay.innerHTML += `
+                    <div class="jacobsthal-sequence" style="background: #fff3e0; border-color: #ff9800;">
+                        <h3 style="color: #e65100;">Insertion Order:</h3>
+                        <div class="jacobsthal-numbers">
+                            ${step.insertionOrder.map(num => `<span class="jacobsthal-number" style="background: #ff9800;">${num}</span>`).join('')}
+                        </div>
+                    </div>
+                `;
+            }
+
+            // Display pairs if present
+            if (step.pairs) {
+                pairsDisplay.innerHTML = '<h3 style="margin-bottom: 10px; color: #667eea;">Pairs (smaller, larger):</h3>';
+                const pairsContainer = document.createElement('div');
+                pairsContainer.style.display = 'flex';
+                pairsContainer.style.flexWrap = 'wrap';
+                pairsContainer.style.gap = '10px';
+                pairsContainer.style.justifyContent = 'center';
+
+                step.pairs.forEach(pair => {
+                    const pairDiv = document.createElement('div');
+                    pairDiv.className = 'pair-container';
+                    pairDiv.innerHTML = `
+                        <div class="pair-item">
+                            <div class="array-item pending">${pair[0]}</div>
+                            <div class="array-item sorted">${pair[1]}</div>
+                        </div>
+                    `;
+                    pairsContainer.appendChild(pairDiv);
+                });
+
+                pairsDisplay.appendChild(pairsContainer);
+            }
+
+            // Display main chain if present
+            if (step.mainChain) {
+                mainChainDisplay.innerHTML = '<h3 style="margin-bottom: 10px; color: #667eea;">Main Chain (S):</h3>';
+                const chainContainer = document.createElement('div');
+                chainContainer.className = 'array-display';
+
+                step.mainChain.forEach((value, i) => {
+                    const item = document.createElement('div');
+                    item.className = 'array-item sorted';
+                    
+                    // Highlight the newly inserted value
+                    if (step.highlights && step.highlights.includes(i)) {
+                        item.classList.add('highlight');
+                    }
+                    
+                    // Show search limit position
+                    if (step.highlightPos !== undefined && i === step.highlightPos) {
+                        item.style.borderColor = '#f39c12';
+                        item.style.borderWidth = '3px';
+                        item.title = 'Paired a value - search limit';
+                    }
+                    
+                    // Highlight search range for insertion
+                    if (step.searchLimit !== undefined && i <= step.searchLimit && step.type === 'before_insert') {
+                        item.style.opacity = '1';
+                        item.style.backgroundColor = '#e8f5e9';
+                        item.style.borderColor = '#4caf50';
+                    } else if (step.searchLimit !== undefined && step.type === 'before_insert') {
+                        item.style.opacity = '0.3';
+                    }
+                    
+                    item.textContent = value;
+                    chainContainer.appendChild(item);
+                });
+
+                // Show value being inserted
+                if (step.insertValue !== undefined && step.type === 'before_insert') {
+                    const insertDiv = document.createElement('div');
+                    insertDiv.style.marginTop = '15px';
+                    insertDiv.style.textAlign = 'center';
+                    insertDiv.innerHTML = `
+                        <div style="display: inline-block;">
+                            <strong style="color: #ff6b6b;">Inserting: </strong>
+                            <span class="array-item pending" style="display: inline-block; margin-left: 10px;">${step.insertValue}</span>
+                        </div>
+                    `;
+                    chainContainer.appendChild(insertDiv);
+                }
+
+                mainChainDisplay.appendChild(chainContainer);
+
+                if (step.pendingInsertions && step.pendingInsertions.length > 0) {
+                    mainChainDisplay.innerHTML += '<h3 style="margin: 20px 0 10px 0; color: #ff6b6b;">Pending Insertions (b values):</h3>';
+                    const pendingContainer = document.createElement('div');
+                    pendingContainer.className = 'array-display';
+
+                    step.pendingInsertions.forEach(value => {
+                        const item = document.createElement('div');
+                        item.className = 'array-item pending';
+                        item.textContent = value;
+                        pendingContainer.appendChild(item);
+                    });
+
+                    mainChainDisplay.appendChild(pendingContainer);
+                }
+            } else if (step.array) {
+                // Display regular array
+                step.array.forEach((value, i) => {
+                    const item = document.createElement('div');
+                    item.className = 'array-item';
+                    
+                    if (step.highlights && step.highlights.includes(i)) {
+                        if (step.type === 'initial' || step.type === 'extract_a' || step.type === 'recursive_sort') {
+                            item.classList.add('sorted');
+                        } else {
+                            item.classList.add('compared');
+                        }
+                    }
+                    
+                    if (step.type === 'complete') {
+                        item.classList.add('sorted');
+                    }
+
+                    item.textContent = value;
+                    arrayDisplay.appendChild(item);
+                });
+
+                if (step.leftover !== undefined) {
+                    const leftoverDiv = document.createElement('div');
+                    leftoverDiv.style.marginTop = '20px';
+                    leftoverDiv.style.textAlign = 'center';
+                    leftoverDiv.innerHTML = `<strong style="color: #ff6b6b;">Leftover: <span class="array-item pending" style="display: inline-block; margin-left: 10px;">${step.leftover}</span></strong>`;
+                    arrayDisplay.appendChild(leftoverDiv);
+                }
+            }
+
+            document.getElementById('prevBtn').disabled = index === 0;
+            document.getElementById('nextBtn').disabled = index === steps.length - 1;
+        }
+
+        function updateStepCounter() {
+            document.getElementById('totalSteps').textContent = steps.length;
+        }
+
+        function nextStep() {
+            if (currentStepIndex < steps.length - 1) {
+                displayStep(currentStepIndex + 1);
+            }
+        }
+
+        function previousStep() {
+            if (currentStepIndex > 0) {
+                displayStep(currentStepIndex - 1);
+            }
+        }
+
+        function togglePlay() {
+            isPlaying = !isPlaying;
+            const playBtn = document.getElementById('playBtn');
+            
+            if (isPlaying) {
+                playBtn.textContent = '⏸ Pause';
+                playInterval = setInterval(() => {
+                    if (currentStepIndex < steps.length - 1) {
+                        nextStep();
+                    } else {
+                        togglePlay();
+                    }
+                }, parseInt(speedSlider.value));
+            } else {
+                playBtn.textContent = '▶ Play';
+                if (playInterval) {
+                    clearInterval(playInterval);
+                    playInterval = null;
+                }
+            }
+        }
+
+        function reset() {
+            if (playInterval) {
+                clearInterval(playInterval);
+                playInterval = null;
+            }
+            isPlaying = false;
+            document.getElementById('playBtn').textContent = '▶ Play';
+            
+            if (steps.length > 0) {
+                displayStep(0);
+            }
+        }
+
+        // Initialize with example
+        window.addEventListener('load', function() {
+            startVisualization();
+        });
+    </script>
+</body>
+</html>

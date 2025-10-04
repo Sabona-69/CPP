@@ -1,0 +1,349 @@
+#!/bin/bash
+
+# CPP09 Manual Test Commands
+# Copy and paste these commands one by one to test each exercise
+
+cat << 'EOF'
+╔══════════════════════════════════════════════════════════════╗
+║           CPP09 COMPREHENSIVE TEST SUITE                      ║
+║  Copy and paste commands below to test each exercise         ║
+╚══════════════════════════════════════════════════════════════╝
+
+════════════════════════════════════════════════════════════════
+EXERCISE 00: BitcoinExchange Tests
+════════════════════════════════════════════════════════════════
+
+# Navigate and compile
+cd ex00 && make re
+
+# Test 1: Valid inputs
+cat > test1.txt << 'TESTEOF'
+date | value
+2011-01-03 | 3
+2012-01-11 | 2
+2013-01-09 | 1
+TESTEOF
+./btc test1.txt
+echo "Press Enter to continue..."; read
+
+# Test 2: Invalid date - month too high
+cat > test2.txt << 'TESTEOF'
+date | value
+2011-13-03 | 3
+TESTEOF
+./btc test2.txt
+echo "Press Enter to continue..."; read
+
+# Test 3: Invalid date - day too high
+cat > test3.txt << 'TESTEOF'
+date | value
+2011-02-31 | 1
+TESTEOF
+./btc test3.txt
+echo "Press Enter to continue..."; read
+
+# Test 4: Negative value
+cat > test4.txt << 'TESTEOF'
+date | value
+2011-01-03 | -1
+TESTEOF
+./btc test4.txt
+echo "Press Enter to continue..."; read
+
+# Test 5: Too large value (over 1000)
+cat > test5.txt << 'TESTEOF'
+date | value
+2011-01-03 | 1001
+TESTEOF
+./btc test5.txt
+echo "Press Enter to continue..."; read
+
+# Test 6: Boundary values
+cat > test6.txt << 'TESTEOF'
+date | value
+2011-01-03 | 0
+2012-01-11 | 1000
+2013-01-09 | 0.01
+TESTEOF
+./btc test6.txt
+echo "Press Enter to continue..."; read
+
+# Test 7: Leap year tests
+cat > test7.txt << 'TESTEOF'
+date | value
+2020-02-29 | 1
+2021-02-29 | 1
+2000-02-29 | 1
+1900-02-29 | 1
+TESTEOF
+./btc test7.txt
+echo "Press Enter to continue..."; read
+
+# Test 8: Invalid format (bad delimiter)
+cat > test8.txt << 'TESTEOF'
+date | value
+2011-01-03 3
+TESTEOF
+./btc test8.txt
+echo "Press Enter to continue..."; read
+
+# Test 9: No arguments
+./btc
+echo "Press Enter to continue..."; read
+
+# Test 10: Missing file
+./btc nonexistent.txt
+echo "Press Enter to continue..."; read
+
+# Test 11: Too many arguments
+./btc test1.txt extra_arg
+echo "Press Enter to continue..."; read
+
+# TRICKY Test 12: Remove read permission
+chmod 000 data.csv 2>/dev/null
+./btc test1.txt
+chmod 644 data.csv 2>/dev/null
+echo "Press Enter to continue..."; read
+
+# TRICKY Test 13: April has 30 days, not 31
+cat > test13.txt << 'TESTEOF'
+date | value
+2011-04-31 | 1
+TESTEOF
+./btc test13.txt
+echo "Press Enter to continue..."; read
+
+# TRICKY Test 14: November has 30 days
+cat > test14.txt << 'TESTEOF'
+date | value
+2011-11-31 | 1
+TESTEOF
+./btc test14.txt
+echo "Press Enter to continue..."; read
+
+# Cleanup
+rm -f test*.txt
+cd ..
+
+════════════════════════════════════════════════════════════════
+EXERCISE 01: RPN Calculator Tests
+════════════════════════════════════════════════════════════════
+
+# Navigate and compile
+cd ex01 && make re
+
+# Test 1: Basic operations
+./RPN "8 9 * 9 - 9 - 9 - 4 - 1 +"
+echo "Expected: 42"
+echo "Press Enter to continue..."; read
+
+# Test 2: Another famous expression
+./RPN "7 7 * 7 -"
+echo "Expected: 42"
+echo "Press Enter to continue..."; read
+
+# Test 3: Simple addition
+./RPN "3 4 +"
+echo "Expected: 7"
+echo "Press Enter to continue..."; read
+
+# Test 4: Division
+./RPN "9 3 /"
+echo "Expected: 3"
+echo "Press Enter to continue..."; read
+
+# Test 5: All single digits work
+./RPN "0 1 +"
+echo "Expected: 1"
+echo "Press Enter to continue..."; read
+
+./RPN "9 9 +"
+echo "Expected: 18"
+echo "Press Enter to continue..."; read
+
+# Test 6: Multi-digit numbers (SHOULD FAIL)
+./RPN "10 2 +"
+echo "Expected: ERROR"
+echo "Press Enter to continue..."; read
+
+# Test 7: More multi-digit (SHOULD FAIL)
+./RPN "99 1 +"
+echo "Expected: ERROR"
+echo "Press Enter to continue..."; read
+
+# Test 8: Invalid operator
+./RPN "1 2 %"
+echo "Expected: ERROR"
+echo "Press Enter to continue..."; read
+
+# Test 9: Division by zero
+./RPN "5 0 /"
+echo "Expected: ERROR - Division by zero"
+echo "Press Enter to continue..."; read
+
+# Test 10: Not enough operands
+./RPN "1 +"
+echo "Expected: ERROR"
+echo "Press Enter to continue..."; read
+
+# Test 11: Too many operands
+./RPN "1 2 3 +"
+echo "Expected: ERROR"
+echo "Press Enter to continue..."; read
+
+# Test 12: Empty input
+./RPN ""
+echo "Expected: ERROR"
+echo "Press Enter to continue..."; read
+
+# Test 13: No arguments
+./RPN
+echo "Expected: ERROR"
+echo "Press Enter to continue..."; read
+
+# Test 14: Multiple arguments
+./RPN "1 2 +" "3 4 +"
+echo "Expected: ERROR"
+echo "Press Enter to continue..."; read
+
+# Test 15: Invalid characters
+./RPN "1 2 + abc"
+echo "Expected: ERROR"
+echo "Press Enter to continue..."; read
+
+# Test 16: All operators test
+./RPN "5 3 +"
+echo "Expected: 8"
+./RPN "5 3 -"
+echo "Expected: 2"
+./RPN "5 3 *"
+echo "Expected: 15"
+./RPN "6 3 /"
+echo "Expected: 2"
+echo "Press Enter to continue..."; read
+
+# TRICKY Test 17: Integer division truncation
+./RPN "5 2 /"
+echo "Expected: 2 (not 2.5)"
+echo "Press Enter to continue..."; read
+
+# TRICKY Test 18: Multiple spaces
+./RPN "1  2  +"
+echo "Expected: 3 or ERROR depending on implementation"
+echo "Press Enter to continue..."; read
+
+# TRICKY Test 19: Leading zero (single character, should work?)
+./RPN "0 2 +"
+echo "Expected: 2"
+echo "Press Enter to continue..."; read
+
+cd ..
+
+════════════════════════════════════════════════════════════════
+EXERCISE 02: PmergeMe Tests
+════════════════════════════════════════════════════════════════
+
+# Navigate and compile
+cd ex02 && make re
+
+# Test 1: Simple sequence
+./PmergeMe 3 5 9 7 4
+echo "Press Enter to continue..."; read
+
+# Test 2: Already sorted
+./PmergeMe 1 2 3 4 5
+echo "Expected: After should be same as Before"
+echo "Press Enter to continue..."; read
+
+# Test 3: Reverse sorted
+./PmergeMe 9 8 7 6 5 4 3 2 1
+echo "Expected: After should be 1 2 3 4 5 6 7 8 9"
+echo "Press Enter to continue..."; read
+
+# Test 4: Single element
+./PmergeMe 42
+echo "Press Enter to continue..."; read
+
+# Test 5: Two elements
+./PmergeMe 2 1
+echo "Expected: After should be 1 2"
+echo "Press Enter to continue..."; read
+
+# Test 6: Duplicates
+./PmergeMe 5 5 5 5 5
+echo "Expected: After should be 5 5 5 5 5"
+echo "Press Enter to continue..."; read
+
+# Test 7: Large numbers
+./PmergeMe 2147483647 1 999999999 42
+echo "Press Enter to continue..."; read
+
+# Test 8: Larger sequence
+./PmergeMe 15 8 23 4 16 42 11 9 27 3 19 7 31 2 13 5 29 1 17 21
+echo "Press Enter to continue..."; read
+
+# Test 9: With zero
+./PmergeMe 0 5 3 8 1
+echo "Press Enter to continue..."; read
+
+# Test 10: No arguments
+./PmergeMe
+echo "Expected: ERROR"
+echo "Press Enter to continue..."; read
+
+# Test 11: Negative numbers (SHOULD FAIL)
+./PmergeMe 1 -2 3
+echo "Expected: ERROR"
+echo "Press Enter to continue..."; read
+
+# Test 12: Non-numeric input (SHOULD FAIL)
+./PmergeMe 1 abc 3
+echo "Expected: ERROR"
+echo "Press Enter to continue..."; read
+
+# Test 13: Float numbers (SHOULD FAIL)
+./PmergeMe 1 2.5 3
+echo "Expected: ERROR"
+echo "Press Enter to continue..."; read
+
+# Test 14: Large sequence (50 numbers)
+./PmergeMe 43 21 65 18 92 7 35 58 11 76 3 49 82 26 61 9 38 71 14 53 99 2 47 84 19 66 31 78 5 42 88 23 69 12 55 91 8 34 77 16 51 96 27 64 1 40 85 20 59 98
+echo "Press Enter to continue..."; read
+
+# TRICKY Test 15: INT_MAX
+./PmergeMe 2147483647 2147483646 1 0
+echo "Press Enter to continue..."; read
+
+# TRICKY Test 16: All zeros
+./PmergeMe 0 0 0 0 0
+echo "Press Enter to continue..."; read
+
+# TRICKY Test 17: Over INT_MAX (SHOULD FAIL)
+./PmergeMe 2147483648
+echo "Expected: ERROR"
+echo "Press Enter to continue..."; read
+
+cd ..
+
+════════════════════════════════════════════════════════════════
+SUMMARY
+════════════════════════════════════════════════════════════════
+
+echo "All manual tests completed!"
+echo ""
+echo "Things to verify:"
+echo "1. Ex00: Proper date validation including leap years"
+echo "2. Ex00: Value range checking (0-1000)"
+echo "3. Ex01: ONLY single digits 0-9 accepted (no 10, 99, etc)"
+echo "4. Ex01: All four operators work correctly"
+echo "5. Ex02: Sorting is correct for all test cases"
+echo "6. Ex02: Timing is displayed for both vector and deque"
+echo "7. No memory leaks (run with valgrind if needed)"
+echo "8. No segmentation faults"
+echo ""
+echo "Optional: Run with valgrind"
+echo "  cd ex00 && valgrind --leak-check=full ./btc test1.txt"
+echo "  cd ex01 && valgrind --leak-check=full ./RPN '1 2 +'"
+echo "  cd ex02 && valgrind --leak-check=full ./PmergeMe 3 5 9 7 4"
+
+EOF

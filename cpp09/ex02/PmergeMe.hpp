@@ -38,8 +38,19 @@ class PmergeMe {
 		std::vector<int> fordJohnson(std::vector<int> vec);
 		std::deque<int>	fordJohnson(std::deque<int> deq);
 
+		// Binary insertion with limited search range (up to maxPos)
+		void insertBinaryLimited(std::vector<int>& vec, int value, size_t maxPos);
+		
+		// Generate Jacobsthal numbers
+		std::vector<size_t> generateJacobsthal(size_t limit);
+		
+		// Generate insertion order based on Jacobsthal sequence
+		std::vector<size_t> getInsertionOrder(size_t n);
 
 
+		void insertBinaryLimited(std::deque<int>& vec, int value, size_t maxPos);
+		std::deque<size_t> generateJacobsthalDeque(size_t limit);
+		std::deque<size_t> getInsertionOrderDeque(size_t n);
 
 };
 

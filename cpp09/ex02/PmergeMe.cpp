@@ -65,21 +65,162 @@ void PmergeMe::printContainer(const std::string& msg){
 	std::cout << std::endl;
 }
 
+
+// Binary insertion with search limited to [0, maxPos]
+void PmergeMe::insertBinaryLimited(std::deque<int>& vec, int value, size_t maxPos) {
+	size_t left = 0;
+	size_t right = std::min(maxPos + 1, vec.size());
+		
+	while (left < right) {
+		size_t mid = left + (right - left) / 2;
+		if (vec[mid] < value)
+			left = mid + 1;
+		else
+			right = mid;
+	}
+	vec.insert(vec.begin() + left, value);
+}
+
+// Generate Jacobsthal numbers: t_k = t_{k-1} + 2*t_{k-2}, t_0=0, t_1=1
+std::deque<size_t> PmergeMe::generateJacobsthalDeque(size_t limit) {
+	std::deque<size_t> jacobsthal;
+	jacobsthal.push_back(0);
+	jacobsthal.push_back(1);
+		
+	while (true) {
+		size_t next = jacobsthal[jacobsthal.size() - 1] + 
+					 2 * jacobsthal[jacobsthal.size() - 2];
+		if (next > limit)
+			break;
+		jacobsthal.push_back(next);
+	}
+		
+	return jacobsthal;
+}
+
+// Generate insertion order: t_{k+1}-1, t_{k+1}-2, ..., t_k (descending within each group)
+std::deque<size_t> PmergeMe::getInsertionOrderDeque(size_t n) {
+	if (n == 0) return std::deque<size_t>();
+
+	std::deque<size_t> jacobsthal = generateJacobsthalDeque(n + 1);
+	std::deque<size_t> order;
+		
+	// Start from J_3 = 3 (index 3 in jacobsthal array)
+	for (size_t i = 2; i < jacobsthal.size(); i++) {
+		size_t current = jacobsthal[i];
+		size_t previous = (i > 0) ? jacobsthal[i - 1] : 0;
+		
+		// Insert indices from current down to previous+1
+		for (size_t j = std::min(current, n); j > previous && j > 0; j--) {
+			order.push_back(j);
+		}
+		
+		if (current >= n)
+			break;
+	}
+		
+	// Add any remaining indices not covered by Jacobsthal sequence
+	std::deque<bool> used(n + 1, false);
+	for (size_t i = 0; i < order.size(); i++) {
+    	if (order[i] <= n)
+        	used[order[i]] = true;
+	}
+	for (size_t i = 1; i <= n; i++) {
+		if (!used[i]) {
+			order.push_back(i);
+		}
+	}
+		
+	return order;
+}
+
+
+// Binary insertion with search limited to [0, maxPos]
+void PmergeMe::insertBinaryLimited(std::vector<int>& vec, int value, size_t maxPos) {
+	size_t left = 0;
+	size_t right = std::min(maxPos + 1, vec.size());
+		
+	while (left < right) {
+		size_t mid = left + (right - left) / 2;
+		if (vec[mid] < value)
+			left = mid + 1;
+		else
+			right = mid;
+	}
+	vec.insert(vec.begin() + left, value);
+}
+
+// Generate Jacobsthal numbers: t_k = t_{k-1} + 2*t_{k-2}, t_0=0, t_1=1
+std::vector<size_t> PmergeMe::generateJacobsthal(size_t limit) {
+	std::vector<size_t> jacobsthal;
+	jacobsthal.push_back(0);
+	jacobsthal.push_back(1);
+		
+	while (true) {
+		size_t next = jacobsthal[jacobsthal.size() - 1] + 
+					 2 * jacobsthal[jacobsthal.size() - 2];
+		if (next > limit)
+			break;
+		jacobsthal.push_back(next);	
+	}
+		
+	return jacobsthal;
+}
+
+// Generate insertion order: t_{k+1}-1, t_{k+1}-2, ..., t_k (descending within each group)
+std::vector<size_t> PmergeMe::getInsertionOrder(size_t n) {
+	if (n == 0) return std::vector<size_t>();
+
+	std::vector<size_t> jacobsthal = generateJacobsthal(n + 1);
+	std::vector<size_t> order;
+		
+	// Start from J_3 = 3 (index 3 in jacobsthal array)
+	for (size_t i = 2; i < jacobsthal.size(); i++) {
+		size_t current = jacobsthal[i];
+		size_t previous = (i > 0) ? jacobsthal[i - 1] : 0;
+		
+		// Insert indices from current down to previous+1
+		for (size_t j = std::min(current, n); j > previous && j > 0; j--) {
+			order.push_back(j);
+		}
+		
+		if (current >= n)
+			break;
+	}
+		
+	// Add any remaining indices not covered by Jacobsthal sequence
+	std::vector<bool> used(n + 1, false);
+	for (size_t i = 0; i < order.size(); i++) {
+		if (order[i] <= n)
+			used[order[i]] = true;
+	}
+		
+	for (size_t i = 1; i <= n; i++) {
+		if (!used[i]) {
+			order.push_back(i);
+		}
+	}
+		
+	return order;
+}
+
 std::vector<int> PmergeMe::fordJohnson(std::vector<int> vec) {
-	if (vec.size() <= 1)
+	// M1. [Initial sorting pass]
+	size_t n = vec.size();
+	if (n <= 1)
 		return vec;
 
-	bool hasLeftover = false;
+	bool hasLeftover = (n % 2 == 1);
 	int leftover = 0;
-	size_t n = vec.size();
 
-	if (n % 2 == 1) {
+	// Handle odd case: save last element
+	if (hasLeftover) {
 		leftover = vec[n - 1];
 		hasLeftover = true;
 		n--;
 	}
 	
-	// form pairs (b, a) with b < a
+	// M2. [Pairwise comparison] - Form pairs (b_i, a_i) where b_i <= a_i
 	std::vector<std::pair<int, int> > pairs;
 	for (size_t i = 0; i < n; i += 2) {
 		if (vec[i] < vec[i + 1])
@@ -94,14 +235,14 @@ std::vector<int> PmergeMe::fordJohnson(std::vector<int> vec) {
 		a_values.push_back(pairs[i].second);
 	}
 
-	// recursively sort 'a' values	
+	// M3. [Recursively sort a values]
 	std::vector<int> sorted_a = fordJohnson(a_values);
-	
-	// sort pairs  into sorted_pairs to match sorted_a
+ 
+	// M4. [Reorder pairs according to sorted a values]
 	std::vector<std::pair<int, int> > sorted_pairs;
 	std::vector<bool> used(pairs.size(), false);
 	for (size_t i = 0; i < sorted_a.size(); ++i) {
-		for (size_t j = 0; j < pairs.size(); ++j) {
+		for (size_t j = 0; j < pairs.size(); ++j) { 
 			if (!used[j] && pairs[j].second == sorted_a[i]) {
 				sorted_pairs.push_back(pairs[j]);
 				used[j] = true;
@@ -109,54 +250,52 @@ std::vector<int> PmergeMe::fordJohnson(std::vector<int> vec) {
 			}
 		}
 	}
-	// build main = [b1] + [a1, a2, ..., ak]
+	// M5. [Build main chain S]
+	// S starts with b_1, then all a values in order
 	std::vector<int> mainChain;
-	mainChain.push_back(sorted_pairs[0].first);
-	for (size_t i = 0; i < sorted_pairs.size(); ++i) {
-		mainChain.push_back(sorted_pairs[i].second);
+	if (!sorted_pairs.empty()) {
+		mainChain.push_back(sorted_pairs[0].first);   // b_1	
+		for (size_t i = 0; i < sorted_pairs.size(); i++) {
+			mainChain.push_back(sorted_pairs[i].second);  // a_1, a_2, ..., a_n
+		} 
 	}
-
-	// build pend = [b2, b3, ..., bk]
-	std::vector<int> pend;
-	for (size_t i = 1; i < sorted_pairs.size(); ++i) {
-		pend.push_back(sorted_pairs[i].first);
+	// M6. [Insert remaining b values using Jacobsthal order]
+	// Insert b_2, b_3, ..., b_n in the order defined by Jacobsthal numbers
+	if (sorted_pairs.size() > 1) {
+		std::vector<size_t> insertionOrder = getInsertionOrder(sorted_pairs.size() - 1);
+		for (size_t idx = 0; idx < insertionOrder.size(); idx++) {
+			size_t i = insertionOrder[idx]; // i goes from 2 to n
+			if (i < sorted_pairs.size()) {
+				int b_value = sorted_pairs[i].first;
+				// Binary search limited to position of corresponding a_i
+				// a_i is now at position i in mainChain (a fter b_1)
+				// Find actual position of a_i in mainChain
+				size_t a_pos = 0;
+				for (size_t j = 0; j < mainChain.size(); j++) {
+					if (mainChain[j] == sorted_pairs[i].second) {
+						a_pos = j;
+						break;
+					} 
+				}			
+				insertBinaryLimited(mainChain, b_value, a_pos);
+			}
+		}
 	}
-
-	// jacobsthal-inspired insertion order: [1,0,3,2,5,4,...]
-	std::vector<int> insertOrder;
-	for (int i = 1; i < (int)pend.size(); i += 2) {
-		insertOrder.push_back(i);
-		insertOrder.push_back(i - 1);
-	}
-	if (pend.size() % 2 == 1 && !pend.empty()) {
-		insertOrder.push_back(pend.size() - 1);
-	}
-
-	// insert pend elements
-	for (size_t idx = 0; idx < insertOrder.size(); ++idx) {
-		int val = pend[insertOrder[idx]];
-		std::vector<int>::iterator it = std::lower_bound(mainChain.begin(), mainChain.end(), val);
-		mainChain.insert(it, val);
-	} 
-
 	// insert leftover
 	if (hasLeftover) {
-		std::vector<int>::iterator it = std::lower_bound(mainChain.begin(), mainChain.end(), leftover);
-		mainChain.insert(it, leftover);
+		insertBinaryLimited(mainChain, leftover, mainChain.size());
 	}
-
 	return mainChain;
 }
 
 std::deque<int> PmergeMe::fordJohnson(std::deque<int> deq) {
-	if (deq.size() <= 1)
-		return deq;
-
-	bool hasLeftover = false;
-	int leftover = 0;
+	
 	size_t n = deq.size();
-
-	if (n % 2 == 1) {
+	if (n <= 1)
+		return deq;
+	bool hasLeftover = (n % 2 == 1);
+	int leftover = 0;
+	if (hasLeftover) {
 		leftover = deq[n - 1];
 		hasLeftover = true;
 		n--;
@@ -185,30 +324,34 @@ std::deque<int> PmergeMe::fordJohnson(std::deque<int> deq) {
 		}
 	}
 	std::deque<int> mainChain;
-	mainChain.push_back(sorted_pairs[0].first);
-	for (size_t i = 0; i < sorted_pairs.size(); ++i) {
-		mainChain.push_back(sorted_pairs[i].second);
+	if (!sorted_pairs.empty()) {
+		mainChain.push_back(sorted_pairs[0].first);  
+		for (size_t i = 0; i < sorted_pairs.size(); i++) {
+			mainChain.push_back(sorted_pairs[i].second);  
+		}
 	}
-	std::deque<int> pend;
-	for (size_t i = 1; i < sorted_pairs.size(); ++i) {
-		pend.push_back(sorted_pairs[i].first);
+	if (sorted_pairs.size() > 1) {
+		std::deque<size_t> insertionOrder = getInsertionOrderDeque(sorted_pairs.size() - 1);
+		for (size_t idx = 0; idx < insertionOrder.size(); idx++) {
+			size_t i = insertionOrder[idx]; 
+			if (i < sorted_pairs.size()) {
+				int b_value = sorted_pairs[i].first;
+				
+				
+				
+				size_t a_pos = 0;
+				for (size_t j = 0; j < mainChain.size(); j++) {
+					if (mainChain[j] == sorted_pairs[i].second) {
+						a_pos = j;
+						break;
+					}
+				}			
+				insertBinaryLimited(mainChain, b_value, a_pos);
+			}
+		}
 	}
-	std::deque<int> insertOrder;
-	for (int i = 1; i < (int)pend.size(); i += 2) {
-		insertOrder.push_back(i);
-		insertOrder.push_back(i - 1);
-	}
-	if (pend.size() % 2 == 1 && !pend.empty()) {
-		insertOrder.push_back(pend.size() - 1);
-	}
-	for (size_t idx = 0; idx < insertOrder.size(); ++idx) {
-		int val = pend[insertOrder[idx]];
-		std::deque<int>::iterator it = std::lower_bound(mainChain.begin(), mainChain.end(), val);
-		mainChain.insert(it, val);
-	} 
 	if (hasLeftover) {
-		std::deque<int>::iterator it = std::lower_bound(mainChain.begin(), mainChain.end(), leftover);
-		mainChain.insert(it, leftover);
+		insertBinaryLimited(mainChain, leftover, mainChain.size());
 	}
 	return mainChain;
 }
